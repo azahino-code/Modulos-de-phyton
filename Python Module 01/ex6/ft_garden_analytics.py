@@ -57,10 +57,8 @@ class Plant:
             print(f"{time} is more than a year? -> TRUE")
 
     @classmethod
-    def anonymous(self):
-        self.name = "Anonymous"
-        self.ages = 0
-        self.height = 0
+    def anonymous(cls):
+        return cls("Anonymous", 0, 0)
 
     def get_height(self):
         print(f"{self.name}: actual height: {self.height}cm.")
@@ -95,16 +93,16 @@ class Flower(Plant):
     def __init__(self, name, height, ages, color):
         super().__init__(name, height, ages)
         self.color = color
-        self.bloom = False
+        self.is_blooming = False
 
     def ask_bloom(self):
         print(f"[Asking the {self.name} to bloom]")
-        self.bloom = True
+        self.is_blooming = True
 
     def show(self):
         print(super().show())
         print(f"Color: {self.color}.")
-        if self.bloom:
+        if self.is_blooming:
             print(f"{self.name} is blooming beautifully!")
         else:
             print(f"{self.name} has not bloomed yet.")
