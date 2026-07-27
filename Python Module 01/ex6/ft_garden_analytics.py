@@ -18,7 +18,6 @@ class Plant:
             self._age_calls = 0
             self._show_calls = 0
 
-
     def __init__(self, name, height, ages):
         self.name = name
         self.height = float(height)
@@ -139,11 +138,12 @@ class Vegetable(Plant):
 
 
 def show_stats(Plant):
-            print(f"Grow calls: {Plant._stats._grow_calls}")
-            print(f"Age calls: {Plant._stats._age_calls}")
-            print(f"Show calls: {Plant._stats._show_calls}")
-            if isinstance(Plant, Tree):
-                print(f"Shade calls: {Plant._produced_shades}")
+    print(f"Grow calls: {Plant._stats._grow_calls}")
+    print(f"Age calls: {Plant._stats._age_calls}")
+    print(f"Show calls: {Plant._stats._show_calls}")
+    if isinstance(Plant, Tree):
+        print(f"Shade calls: {Plant._produced_shades}")
+
 
 tree = Tree("Oak", 100, 365, 25)
 tree.produce_shade()

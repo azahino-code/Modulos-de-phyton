@@ -28,6 +28,7 @@ def test_temperature(temp_str: str) -> None:
     except ValueError as error:
         print(f"Caught input_temperature error: {error}\n")
 
+
 print("=== Garden Temperature Checker ===\n")
 test_temperature("100")
 test_temperature("-50")

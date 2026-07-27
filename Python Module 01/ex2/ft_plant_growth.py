@@ -23,7 +23,8 @@ class Plant:
         self.days += 1
 
     def show(self):
-        print(f"{plant.name}: {round(plant.height, 2)}cm, {plant.days} days old")
+        str1 = f"{plant.name}: {round(plant.height, 2)}"
+        print(str1 + f"cm, {plant.days} days old")
 
 
 plant = Plant("rose", 0.32, 0)
