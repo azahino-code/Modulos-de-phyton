@@ -12,17 +12,17 @@
 
 class GardenError(Exception):
     def __init__(self, message="Unknown garden error") -> None:
-        super().__init__(message)
+        self.error = message
 
 
 class PlantError(GardenError):
     def __init__(self, message="Unknown plant error") -> None:
-        super().__init__(message)
+        self.error = message
 
 
 class WaterError(GardenError):
     def __init__(self, message="Unknown water error") -> None:
-        super().__init__(message)
+        self.error = message
 
 
 def check_garden(water_day: int, litre: int) -> None:
