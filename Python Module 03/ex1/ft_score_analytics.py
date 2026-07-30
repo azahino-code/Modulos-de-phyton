@@ -12,14 +12,33 @@
 
 import sys
 
-try:
-    scores = [sys.argv]
+
+def convert_int(index: int, argument) -> int:
+    if index == len(argument):
+        return 0
+    try:
+        argument[index] = int(argument[index])
+        convert_int(index + 1, argument)
+        return 0
+    except ValueError as error:
+        print(f"ValueError: {error}")
+        convert_int(index + 1, argument)
+        return 1
+
+
+if len(sys.argv) <= 1:
+    print("There aren't arguments. Please, introduce valid args.")
+else:
+    args = sys.argv[1:]
     print("=== Player Acore Analytics ===")
+    error = convert_int(0, args)
+    if error == 1:
+        print(f"No scores provided. Usage: python3 {sys.argv}")
+        sys.exit()
+    scores: list[int] = sys.argv[1:]
     print(f"Score processed: {scores}")
     print(f"Total players: {len(sys.argv) - 1}")
-    print(f"Total score: {sum(sys.argv)}")
-    print(f"High score: {max(sys.argv)}")
-    print(f"Low score: {min(sys.argv)}")
-    print(f"Score range: {max(sys.argv) - min(sys.argv)}")
-except:
-    print(f"")
+    print(f"Total score: {sum(scores)}")
+    print(f"High score: {max(scores)}")
+    print(f"Low score: {min(scores)}")
+    print(f"Score range: {max(scores) - min(scores)}")
