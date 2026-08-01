@@ -13,16 +13,16 @@
 import sys
 
 
-def convert_int(index: int, argument) -> int:
+def convert_int(index: int, argument, scores, is_error) -> int:
     if index == len(argument):
-        return 0
+        return is_error
     try:
-        argument[index] = int(argument[index])
-        convert_int(index + 1, argument)
-        return 0
+        scores.append(int(argument[index]))
+        is_error = convert_int(index + 1, argument, scores, is_error)
+        return is_error
     except ValueError as error:
         print(f"ValueError: {error}")
-        convert_int(index + 1, argument)
+        convert_int(index + 1, argument, scores, is_error)
         return 1
 
 
@@ -30,12 +30,12 @@ if len(sys.argv) <= 1:
     print("There aren't arguments. Please, introduce valid args.")
 else:
     args = sys.argv[1:]
+    scores: list[int] = []
     print("=== Player Acore Analytics ===")
-    error = convert_int(0, args)
+    error = convert_int(0, args, scores, 0)
     if error == 1:
         print(f"No scores provided. Usage: python3 {sys.argv}")
         sys.exit()
-    scores: list[int] = sys.argv[1:]
     print(f"Score processed: {scores}")
     print(f"Total players: {len(sys.argv) - 1}")
     print(f"Total score: {sum(scores)}")
