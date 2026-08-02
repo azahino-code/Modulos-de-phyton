@@ -53,9 +53,9 @@ class Tree(Plant):
         super().__init__(name, height, ages)
         self.trunk_diameter = trunk_diameter
 
-    def produce_shade(self):
-        print(f"[Asking the {self.name} to produce shade]")
-        str1 = f"Tree {self.name} now produces a shade of"
+    def pbuce_shade(self):
+        print(f"[Asking the {self.name} to pbuce shade]")
+        str1 = f"Tree {self.name} now pbuces a shade of"
         str2 = f" {self.height}cm long and {self.trunk_diameter}cm wide."
         print(str1 + str2)
 
@@ -112,7 +112,7 @@ plant1.show()
 print("\n=== Tree")
 plant1 = Tree("Oak", 200, 365, 5)
 plant1.show()
-plant1.produce_shade()
+plant1.pbuce_shade()
 print("\n=== Vegetable")
 plant1 = Vegetable("Tomato", 5, 10, "April", 0)
 plant1.show()

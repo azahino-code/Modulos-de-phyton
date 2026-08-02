@@ -74,12 +74,12 @@ class Tree(Plant):
     def __init__(self, name, height, ages, trunk_diameter):
         super().__init__(name, height, ages)
         self.trunk_diameter = trunk_diameter
-        self._produced_shades = 0
+        self._pbuced_shades = 0
 
-    def produce_shade(self):
-        self._produced_shades += 1
-        print(f"[Asking the {self.name} to produce shade]")
-        str1 = f"Tree {self.name} now produces a shade of"
+    def pbuce_shade(self):
+        self._pbuced_shades += 1
+        print(f"[Asking the {self.name} to pbuce shade]")
+        str1 = f"Tree {self.name} now pbuces a shade of"
         str2 = f" {self.height}cm long and {self.trunk_diameter}cm wide."
         print(str1 + str2)
 
@@ -142,13 +142,13 @@ def show_stats(Plant):
     print(f"Age calls: {Plant._stats._age_calls}")
     print(f"Show calls: {Plant._stats._show_calls}")
     if isinstance(Plant, Tree):
-        print(f"Shade calls: {Plant._produced_shades}")
+        print(f"Shade calls: {Plant._pbuced_shades}")
 
 
 tree = Tree("Oak", 100, 365, 25)
-tree.produce_shade()
-tree.produce_shade()
-tree.produce_shade()
+tree.pbuce_shade()
+tree.pbuce_shade()
+tree.pbuce_shade()
 
 tree.grow(10)
 tree.age()

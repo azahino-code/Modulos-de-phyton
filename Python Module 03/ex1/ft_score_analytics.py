@@ -27,7 +27,7 @@ def convert_int(index: int, argument, scores, is_error) -> int:
 
 
 if len(sys.argv) <= 1:
-    print("There aren't arguments. Please, introduce valid args.")
+    print("There aren't arguments. Please, intbuce valid args.")
 else:
     args = sys.argv[1:]
     scores: list[int] = []

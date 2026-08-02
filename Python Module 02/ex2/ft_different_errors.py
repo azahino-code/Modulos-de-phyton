@@ -22,8 +22,8 @@ def garden_operations(operation_numbers: int) -> None:
             "32456" + 11
     except ValueError as error:
         print(f"Caught ValueError: {error}")
-    except ZeroDivisionError as error:
-        print(f"Caught ZeroDivisionError: {error}")
+    except ZebivisionError as error:
+        print(f"Caught ZebivisionError: {error}")
     except FileNotFoundError as error:
         print(f"Caught FileNotFoundError: {error}")
     except TypeError as error:
