@@ -12,28 +12,45 @@
 
 import random
 
+
 from typing import Generator
 
 
-def gen_event(names: list[str]) -> Generator[tuple[str, str], None, None]:
+def gen_event(n: list[str], q: int) -> Generator[tuple[str, str], None, None]:
     ev = ["run", "climb", "swim", "roar", "lift", "leave", "joke", "speak"]
     i = 0
-    while i <= 999:
-        person_action: tuple[str, str] = (random.choice(names), random.choice(ev))
+    while i < q:
+        person_action: tuple[str, str] = (random.choice(n), random.choice(ev))
         yield person_action
         i += 1
-    
-# def consume_events():
+
+
+def con_e(e) -> Generator[tuple[str, str], None, None]:
+    while len(e):
+        num = random.randint(0, len(e) - 1)
+        retire = e.pop(num)
+        yield retire
+
 
 players: list[str] = ["Aritz", "Anne", "Julen", "Josune"]
 i = 0
-p_a = gen_event(players)
-event_list: list[str,str] = []
-while i <= 999:
+number_of_events = 1000
+p_a = gen_event(players, number_of_events)
+event_list: list[tuple[str, str]] = []
+while i < number_of_events:
     player, action = next(p_a)
-    if i < 10:
-        event_list.append((player, action))
-    print(f"event {i}: Player {player}, {action}")
+    print(f"event {i}: Player {player} did action {action}")
     i += 1
 
+i = 0
+new_gen = gen_event(players, 10)
+while i < 10:
+    player, action = next(new_gen)
+    event_list.append((player, action))
+    i += 1
 print("Built list of 10 events: ", event_list)
+
+erase_gen = con_e(event_list)
+for retire in erase_gen:
+    print(f"Got event from list: {retire}")
+    print(f"Remains in list: {event_list}")
