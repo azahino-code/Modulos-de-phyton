@@ -14,14 +14,17 @@ import sys
 
 from typing import IO
 
+
 def acces_to_file(f_name: str, mode: str = "r") -> IO:
     try:
         file: IO = open(f_name, mode)
         return file
     except FileNotFoundError as error:
         sys.stderr.write(f"[STDERR] Error opening file {f_name}: {error}\n")
+        sys.exit()
     except PermissionError as error:
         sys.stderr.write(f"[STDERR] Error opening file {f_name}: {error}\n")
+        sys.exit()
 
 
 def to_print(text: str, file_name: str) -> None:
@@ -52,6 +55,7 @@ def my_input(txt: str) -> str:
             i += 1
     return final_line
 
+
 def copy_in_new(mod_text: str) -> None:
     f_name = my_input("Enter new file name (or empty): ")
     sys.stdout.write("\n")
@@ -72,11 +76,14 @@ def copy_in_new(mod_text: str) -> None:
                 print(f"{f_name} is filled, try again.\n")
                 copy_in_new(mod_text)
         except FileNotFoundError as error:
-            sys.stderr.write(f"[STDERR] Error opening file {f_name}: {error}\n")
+            message = "[STDERR] Error opening file"
+            sys.stderr.write(message + f"{f_name}: {error}\n")
             print("Data not saved.")
         except PermissionError as error:
-            sys.stderr.write(f"[STDERR] Error opening file {f_name}: {error}\n")
+            message = "[STDERR] Error opening file"
+            sys.stderr.write(message + f"{f_name}: {error}\n")
             print("Data not saved.")
+
 
 print("=== Cyber Archives Recovery ===")
 file = acces_to_file(sys.argv[1])
