@@ -14,6 +14,7 @@ import sys
 
 from typing import IO
 
+
 def acces_to_file(file_name: str, mode: str = "r") -> IO:
     try:
         file: IO = open(file_name, mode)
@@ -39,7 +40,6 @@ def text_to_write(write: str, in_text: str) -> str:
             final_text = final_text + write + character
     final_text = final_text + write
     return final_text
-
 
 
 print("=== Cyber Archives Recovery ===")

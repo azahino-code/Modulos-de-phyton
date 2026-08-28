@@ -12,6 +12,7 @@
 
 import sys
 
+
 def print_bucle(it: int, limit: int) -> None:
     if it < limit:
         print(f"Argument {it}: {sys.argv[it]}")
