@@ -3,12 +3,14 @@
 #                                                         :::      ::::::::   #
 #    data_processor.py                                  :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
-#    By: azahino- <    +#+  +:+       +#+        #
+#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/08/22 12:57:08 by azahino-          #+#    #+#             #
-#    Updated: 2026/08/22 12:57:09 by azahino-         ###   ########.fr       #
+#    Created: 2026/08/28 22:45:50 by azahino-          #+#    #+#             #
+#    Updated: 2026/08/28 22:45:50 by azahino-         ###   ########.fr       #
 #                                                                             #
 # *************************************************************************** #
+
+
 
 from abc import ABC, abstractmethod
 
