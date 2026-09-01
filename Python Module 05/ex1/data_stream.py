@@ -185,13 +185,15 @@ class LogProcessor(DataProcessor):
 class DataStream():
     def __init__(self) -> None:
         self.processors: list[DataProcessor] = []
+        self.data = []
 
     def register_processor(self, proc: DataProcessor) -> None:
         self.processors.append(proc)
 
     def process_stream(self, stream: list[Any]) -> None:
-        remaining: list[Any] = []
+        self.data = stream
         for data in stream:
+            remaining: list[Any] = []
             processed = False
             for p in self.processors:
                 if p.validate(data):
@@ -200,13 +202,58 @@ class DataStream():
                     break
             if processed == False:
                 remaining.append(data)
-        if len(remaining) > 0:
-            print(f"DataStream Error - Can't process element in stream: {remaining}")
-        
+            if len(remaining) > 0:
+                print(f"DataStream Error - Can't process element in stream: {remaining}")
+                del(remaining)
 
     def print_processors_stats(self) -> None:
         print("== DataStream stadistics ==")
-        for p in self.processors:
-            text1 = f"{p.name}: total {p.rank - 1}, remaining"
-            print(f"{text1}  {len(p.value)} on processor")
+        if len(self.processors) == 0 and len(self.data) == 0:
+            print("No processor found, no data")
+        else:
+            for p in self.processors:
+                text1 = f"{p.name}: total {p.rank - 1}, remaining"
+                print(f"{text1}  {len(p.value)} on processor")
 
+print("=== Code Nexus - Data Stream ===\n")
+numeric = NumericProcessor()
+txt = TextProcessor()
+log = LogProcessor()
+data = DataStream()
+print("Initialize Data Stream...")
+data.print_processors_stats()
+
+print("Registering Numeric Processor\n")
+
+stream: list = (
+    ['Hello world', [3.14, -1, 2.71], [{'log_level': 'WARNING',
+    'log_message': 'Telnet access! Use ssh instead'},
+    {'log_level': 'INFO',
+      'log_message': 'User wil isconnected'}], 42, ['Hi', 'five']]
+)
+
+data.register_processor(numeric)
+
+print(f"Send first batch of data on stream: {stream}")
+data.process_stream(stream)
+data.print_processors_stats()
+
+print("\nRegistering other data processors")
+data.register_processor(txt)
+data.register_processor(log)
+
+print("Send the same batch again")
+data.process_stream(stream)
+data.print_processors_stats()
+
+print(
+    "\nConsume some elements from the data processors: " \
+    "Numeric 3, Text 2, Log 1"
+)
+numeric.output()
+numeric.output()
+numeric.output()
+txt.output()
+txt.output()
+log.output()
+data.print_processors_stats()
