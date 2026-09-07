@@ -1,18 +1,6 @@
 # *************************************************************************** #
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    data_stream.py                                     :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/08/28 22:46:16 by azahino-          #+#    #+#             #
-#    Updated: 2026/08/28 22:46:16 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
-
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
 #    data_processor.py                                  :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
 #    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
@@ -28,8 +16,9 @@ from typing import Any
 
 
 class DataProcessor(ABC):
-    def __init__(self):
+    def __init__(self, name: str):
         self.rank = 1
+        self.name = name
         self.value: list[tuple[int, str]] = []
 
     @abstractmethod
@@ -48,8 +37,7 @@ class DataProcessor(ABC):
 
 class NumericProcessor(DataProcessor):
     def __init__(self) -> None:
-        super().__init__()
-        self.name = "NumericProcessor"
+        super().__init__("NumericProcessor")
 
     def validate(self, data: Any) -> bool:
         if isinstance(data, int | float):
@@ -86,8 +74,7 @@ class NumericProcessor(DataProcessor):
 
 class TextProcessor(DataProcessor):
     def __init__(self) -> None:
-        super().__init__()
-        self.name = "TextProcessor"
+        super().__init__("TextProcessor")
 
     def validate(self, data: Any) -> bool:
         if isinstance(data, str):
@@ -124,8 +111,7 @@ class TextProcessor(DataProcessor):
 
 class LogProcessor(DataProcessor):
     def __init__(self) -> None:
-        super().__init__()
-        self.name = "LogProcessor"
+        super().__init__("LogProcessor")
 
     def validate(self, data: Any) -> bool:
         if isinstance(data, dict):
@@ -144,7 +130,6 @@ class LogProcessor(DataProcessor):
             return True
         else:
             return False
-            
 
     def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
         if isinstance(data, dict):
@@ -185,7 +170,7 @@ class LogProcessor(DataProcessor):
 class DataStream():
     def __init__(self) -> None:
         self.processors: list[DataProcessor] = []
-        self.data = []
+        self.data: list[Any] = []
 
     def register_processor(self, proc: DataProcessor) -> None:
         self.processors.append(proc)
@@ -200,11 +185,12 @@ class DataStream():
                     p.ingest(data)
                     processed = True
                     break
-            if processed == False:
+            if processed is False:
                 remaining.append(data)
             if len(remaining) > 0:
-                print(f"DataStream Error - Can't process element in stream: {remaining}")
-                del(remaining)
+                text = "DataStream Error - Can't process"
+                print(f"{text} element in stream: {remaining}")
+                del (remaining)
 
     def print_processors_stats(self) -> None:
         print("== DataStream stadistics ==")
@@ -214,6 +200,7 @@ class DataStream():
             for p in self.processors:
                 text1 = f"{p.name}: total {p.rank - 1}, remaining"
                 print(f"{text1}  {len(p.value)} on processor")
+
 
 print("=== Code Nexus - Data Stream ===\n")
 numeric = NumericProcessor()
@@ -225,12 +212,18 @@ data.print_processors_stats()
 
 print("Registering Numeric Processor\n")
 
-stream: list = (
-    ['Hello world', [3.14, -1, 2.71], [{'log_level': 'WARNING',
-    'log_message': 'Telnet access! Use ssh instead'},
-    {'log_level': 'INFO',
-      'log_message': 'User wil isconnected'}], 42, ['Hi', 'five']]
-)
+stream: list = [
+    'Hello world',
+    [3.14, -1, 2.71],
+    [
+        {'log_level': 'WARNING',
+         'log_message': 'Telnet access! Use ssh instead'},
+        {'log_level': 'INFO',
+         'log_message': 'User wil isconnected'}
+    ],
+    42,
+    ['Hi', 'five']
+]
 
 data.register_processor(numeric)
 
@@ -247,7 +240,7 @@ data.process_stream(stream)
 data.print_processors_stats()
 
 print(
-    "\nConsume some elements from the data processors: " \
+    "\nConsume some elements from the data processors: "
     "Numeric 3, Text 2, Log 1"
 )
 numeric.output()

@@ -1,23 +1,24 @@
 # *************************************************************************** #
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    data_processor.py                                  :+:      :+:    :+:   #
+#    data_pipeline.py                                   :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
 #    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/08/28 22:45:50 by azahino-          #+#    #+#             #
-#    Updated: 2026/08/28 22:45:50 by azahino-         ###   ########.fr       #
+#    Created: 2026/09/07 23:28:19 by azahino-          #+#    #+#             #
+#    Updated: 2026/09/07 23:28:19 by azahino-         ###   ########.fr       #
 #                                                                             #
 # *************************************************************************** #
 
 from abc import ABC, abstractmethod
 
-from typing import Any
+from typing import Any, Protocol
 
 
 class DataProcessor(ABC):
-    def __init__(self):
+    def __init__(self, name: str):
         self.rank = 1
+        self.name = name
         self.value: list[tuple[int, str]] = []
 
     @abstractmethod
@@ -35,6 +36,9 @@ class DataProcessor(ABC):
 
 
 class NumericProcessor(DataProcessor):
+    def __init__(self) -> None:
+        super().__init__("NumericProcessor")
+
     def validate(self, data: Any) -> bool:
         if isinstance(data, int | float):
             return True
@@ -69,6 +73,9 @@ class NumericProcessor(DataProcessor):
 
 
 class TextProcessor(DataProcessor):
+    def __init__(self) -> None:
+        super().__init__("TextProcessor")
+
     def validate(self, data: Any) -> bool:
         if isinstance(data, str):
             return True
@@ -103,6 +110,8 @@ class TextProcessor(DataProcessor):
 
 
 class LogProcessor(DataProcessor):
+    def __init__(self) -> None:
+        super().__init__("LogProcessor")
 
     def validate(self, data: Any) -> bool:
         if isinstance(data, dict):
@@ -121,7 +130,6 @@ class LogProcessor(DataProcessor):
             return True
         else:
             return False
-            
 
     def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
         if isinstance(data, dict):
@@ -157,3 +165,51 @@ class LogProcessor(DataProcessor):
                 raise ValueError("Invalid data.")
         else:
             raise ValueError("Invalid data.")
+
+
+class DataStream():
+    def __init__(self) -> None:
+        self.processors: list[DataProcessor] = []
+        self.data: list[Any] = []
+
+    def register_processor(self, proc: DataProcessor) -> None:
+        self.processors.append(proc)
+
+    def process_stream(self, stream: list[Any]) -> None:
+        self.data = stream
+        nb_list: dict[str, int] = []
+        for data in stream:
+            remaining: list[Any] = []
+            processed = False
+            for p in self.processors:
+                if p.validate(data):
+                    p.ingest(data)
+                    processed = True
+                    break
+            if processed is False:
+                remaining.append(data)
+            if len(remaining) > 0:
+                text = "DataStream Error - Can't process"
+                print(f"{text} element in stream: {remaining}")
+                del (remaining)
+        for p in self.processors:
+            
+
+        
+
+    def print_processors_stats(self) -> None:
+        print("== DataStream stadistics ==")
+        if len(self.processors) == 0 and len(self.data) == 0:
+            print("No processor found, no data")
+        else:
+            for p in self.processors:
+                text1 = f"{p.name}: total {p.rank - 1}, remaining"
+                print(f"{text1}  {len(p.value)} on processor")
+
+# DEspues de llamar a process_stream, consumir nb elementos de los rpocesadores y exportarlos usando el plugin compatible
+    def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
+
+
+
+class ExportPlugin(Protocol):
+    def procces_output(self, data: list[tuple[int, str]]) -> None:
