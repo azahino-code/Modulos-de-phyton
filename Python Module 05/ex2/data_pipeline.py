@@ -15,6 +15,22 @@ from abc import ABC, abstractmethod
 from typing import Any, Protocol
 
 
+class ExportPlugin(Protocol):
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        ...
+
+class CsvManual():
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        for tupla in data:
+            print(f"{tupla[0]}, {tupla[1]}")
+
+
+class JsonManual():
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        for tupla in data:
+            print(f'{{"rank": {tupla[0]}, "data": "{tupla[1]}"}}')
+
+
 class DataProcessor(ABC):
     def __init__(self, name: str):
         self.rank = 1
@@ -28,6 +44,9 @@ class DataProcessor(ABC):
     @abstractmethod
     def ingest(self, data: Any) -> None:
         pass
+
+    def get_data(self) -> list[tuple[int, str]]:
+        return self.value
 
     def output(self) -> tuple[int, str]:
         ret = self.value[0]
@@ -177,7 +196,6 @@ class DataStream():
 
     def process_stream(self, stream: list[Any]) -> None:
         self.data = stream
-        nb_list: dict[str, int] = []
         for data in stream:
             remaining: list[Any] = []
             processed = False
@@ -192,10 +210,7 @@ class DataStream():
                 text = "DataStream Error - Can't process"
                 print(f"{text} element in stream: {remaining}")
                 del (remaining)
-        for p in self.processors:
-            
 
-        
 
     def print_processors_stats(self) -> None:
         print("== DataStream stadistics ==")
@@ -206,10 +221,75 @@ class DataStream():
                 text1 = f"{p.name}: total {p.rank - 1}, remaining"
                 print(f"{text1}  {len(p.value)} on processor")
 
-# DEspues de llamar a process_stream, consumir nb elementos de los rpocesadores y exportarlos usando el plugin compatible
+
     def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
+        lister: list[tuple[int, str]] = []
+        for p in self.processors:
+            index = nb
+            if len(p.value) > 0:
+                if index > len(p.value):
+                    index = len(p.value)
+                for i in range(index):
+                    lister.append(p.output())
+        plugin.process_output(lister)
 
 
+numeric = NumericProcessor()
+txt = TextProcessor()
+log = LogProcessor()
+data = DataStream()
+json = JsonManual()
+csv = CsvManual()
 
-class ExportPlugin(Protocol):
-    def procces_output(self, data: list[tuple[int, str]]) -> None:
+print("=== Code Nexus - Data Pipeline ===")
+print("\nInitialize Data Stream...\n")
+data.print_processors_stats()
+
+print("Registering Processors")
+data.register_processor(numeric)
+data.register_processor(txt)
+data.register_processor(log)
+
+stream: list = [
+    'Hello world',
+    [3.14, -1, 2.71],
+    [
+        {'log_level': 'WARNING',
+         'log_message': 'Telnet access! Use ssh instead'},
+        {'log_level': 'INFO',
+         'log_message': 'User wil isconnected'}
+    ],
+    42,
+    ['Hi', 'five']
+]
+print("Send first batch of data on stream: {stream}\n")
+data.process_stream(stream)
+data.print_processors_stats()
+
+print("send 3 processed data from each processor to a CSV plugin:")
+print("CSV Output:")
+data.output_pipeline(3, csv)
+data.print_processors_stats()
+
+stream = [
+    21,
+    [
+        'I love IA',
+        'LLMs are wonderful',
+        'Stay healthy'
+    ],
+    [
+        {'log_level': 'ERROR', 'log_message': '500 server crash'},
+        {'log_level': 'NOTICE', 'log_message': 'Certificate expires in 10 days'}
+    ],
+    [32, 42, 64, 84, 128, 168],
+    'World hello'
+]
+
+print(f"Send another batch of data {stream}\n")
+data.process_stream(stream)
+data.print_processors_stats()
+print("Send 5 processed data from each processor to a JSON plugin:")
+print("JSON Output")
+data.output_pipeline(5, json)
+data.print_processors_stats()
