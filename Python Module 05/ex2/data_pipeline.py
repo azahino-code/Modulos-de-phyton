@@ -21,14 +21,27 @@ class ExportPlugin(Protocol):
 
 class CsvManual():
     def process_output(self, data: list[tuple[int, str]]) -> None:
+        print("CSV Output:")
+        text: str = ""
         for tupla in data:
-            print(f"{tupla[0]}, {tupla[1]}")
+            if text == "":
+                text = tupla[1]
+            else:
+                text = text + "," + tupla[1]
+        print(text)
 
 
 class JsonManual():
     def process_output(self, data: list[tuple[int, str]]) -> None:
+        print("CSV Output:")
+        text: str = ""
+        i: int = 1
         for tupla in data:
-            print(f'{{"rank": {tupla[0]}, "data": "{tupla[1]}"}}')
+            if text == "":
+                text = f'"item_{str(i)}: "{tupla[1]}"'
+            else:
+                text = text + "," + f'"item_{str(i)}: "{tupla[1]}"'
+        print(text)
 
 
 class DataProcessor(ABC):
@@ -223,15 +236,15 @@ class DataStream():
 
 
     def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
-        lister: list[tuple[int, str]] = []
         for p in self.processors:
+            lister: list[tuple[int, str]] = []
             index = nb
             if len(p.value) > 0:
                 if index > len(p.value):
                     index = len(p.value)
                 for i in range(index):
                     lister.append(p.output())
-        plugin.process_output(lister)
+            plugin.process_output(lister)
 
 
 numeric = NumericProcessor()
@@ -245,7 +258,7 @@ print("=== Code Nexus - Data Pipeline ===")
 print("\nInitialize Data Stream...\n")
 data.print_processors_stats()
 
-print("Registering Processors")
+print("\nRegistering Processors\n")
 data.register_processor(numeric)
 data.register_processor(txt)
 data.register_processor(log)
@@ -262,13 +275,15 @@ stream: list = [
     42,
     ['Hi', 'five']
 ]
-print("Send first batch of data on stream: {stream}\n")
+print(f"Send first batch of data on stream: {stream}\n")
 data.process_stream(stream)
+print()
 data.print_processors_stats()
+print()
 
 print("send 3 processed data from each processor to a CSV plugin:")
-print("CSV Output:")
 data.output_pipeline(3, csv)
+print()
 data.print_processors_stats()
 
 stream = [
@@ -286,10 +301,10 @@ stream = [
     'World hello'
 ]
 
-print(f"Send another batch of data {stream}\n")
+print(f"\nSend another batch of data {stream}\n")
 data.process_stream(stream)
 data.print_processors_stats()
-print("Send 5 processed data from each processor to a JSON plugin:")
-print("JSON Output")
+print("\nSend 5 processed data from each processor to a JSON plugin:")
 data.output_pipeline(5, json)
+print()
 data.print_processors_stats()
