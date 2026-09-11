@@ -19,6 +19,7 @@ class ExportPlugin(Protocol):
     def process_output(self, data: list[tuple[int, str]]) -> None:
         ...
 
+
 class CsvManual():
     def process_output(self, data: list[tuple[int, str]]) -> None:
         print("CSV Output:")
@@ -224,7 +225,6 @@ class DataStream():
                 print(f"{text} element in stream: {remaining}")
                 del (remaining)
 
-
     def print_processors_stats(self) -> None:
         print("== DataStream stadistics ==")
         if len(self.processors) == 0 and len(self.data) == 0:
@@ -233,7 +233,6 @@ class DataStream():
             for p in self.processors:
                 text1 = f"{p.name}: total {p.rank - 1}, remaining"
                 print(f"{text1}  {len(p.value)} on processor")
-
 
     def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
         for p in self.processors:
@@ -295,7 +294,10 @@ stream = [
     ],
     [
         {'log_level': 'ERROR', 'log_message': '500 server crash'},
-        {'log_level': 'NOTICE', 'log_message': 'Certificate expires in 10 days'}
+        {
+            'log_level': 'NOTICE',
+            'log_message': 'Certificate expires in 10 days'
+        }
     ],
     [32, 42, 64, 84, 128, 168],
     'World hello'

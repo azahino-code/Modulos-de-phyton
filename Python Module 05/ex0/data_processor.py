@@ -121,7 +121,6 @@ class LogProcessor(DataProcessor):
             return True
         else:
             return False
-            
 
     def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
         if isinstance(data, dict):
