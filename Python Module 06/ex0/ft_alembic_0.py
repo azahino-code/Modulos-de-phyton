@@ -12,4 +12,7 @@
 
 import elements
 
-print(elements.create_fire())
+test = elements.create_fire()
+print("=== Alembic 0 ===")
+print("Using: 'import ...' structure to access elements.py")
+print(f"Testing create_fire: {test}")
