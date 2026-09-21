@@ -16,13 +16,13 @@ class Plant:
         self.height = float(cm)
         self.days = int(days)
 
-    def grow(self):
+    def grow(self) -> None:
         self.height += 0.8
 
-    def age(self):
+    def age(self) -> None:
         self.days += 1
 
-    def show(self):
+    def show(self) -> None:
         str1 = f"{plant.name}: {round(plant.height, 2)}"
         print(str1 + f"cm, {plant.days} days old")
 

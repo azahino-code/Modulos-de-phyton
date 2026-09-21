@@ -13,7 +13,7 @@
 # Este ejecicio te descubre la sintaxis
 # / base de python junto a como ejecutar los programas.
 
-def ft_hello_garden():
+def ft_hello_garden() -> None:
     print("Hello, Garden Community!")
 
 # ft_hello_garden()

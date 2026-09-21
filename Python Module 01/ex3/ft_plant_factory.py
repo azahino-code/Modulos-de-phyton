@@ -11,18 +11,18 @@
 # *************************************************************************** #
 
 class Plant:
-    def __init__(self, name, starting_cm, starting_days):
+    def __init__(self, name, starting_cm, starting_days) -> None:
         self.name = name
         self.height = float(starting_cm)
         self.ages = int(starting_days)
 
-    def grow(self):
+    def grow(self) -> None:
         self.height += 2
 
-    def age(self):
+    def age(self) -> None:
         self.ages += 1
 
-    def show(self):
+    def show(self) -> None:
         print(f"created: {self.name}: {self.height}cm, {self.ages} days old")
 
 

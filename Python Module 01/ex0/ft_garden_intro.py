@@ -12,7 +12,7 @@
 
 # !/bin/bash
 
-def ft_garden_intro():
+def ft_garden_intro() -> None:
     print("=== Welcome o My Garden ===")
     self = "Rose"
     height = "25cm"
