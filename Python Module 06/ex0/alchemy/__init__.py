@@ -8,10 +8,8 @@
 #    Created: 2026/09/11 23:20:37 by azahino-          #+#    #+#             #
 #    Updated: 2026/09/11 23:20:43 by azahino-         ###   ########.fr       #
 #                                                                             #
-# **************************************************************************** #
+# *************************************************************************** #
 
-import alchemy.elements
+from .elements import create_air
 
-class Element():
-    def __init__(self):
-        self.air = alchemy.elements
+__all__ = create_air()

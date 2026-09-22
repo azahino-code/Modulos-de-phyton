@@ -1,18 +1,18 @@
 # *************************************************************************** #
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    elements.py                                        :+:      :+:    :+:   #
+#    ft_alembic_5.py                                    :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
+#    By: azahino- <azahino-@student.42urduliz.co    +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/09/11 23:18:24 by azahino-          #+#    #+#             #
-#    Updated: 2026/09/11 23:18:30 by azahino-         ###   ########.fr       #
+#    Created: 2026/09/22 17:49:27 by azahino-          #+#    #+#             #
+#    Updated: 2026/09/22 17:49:28 by azahino-         ###   ########.fr       #
 #                                                                             #
 # *************************************************************************** #
 
-def create_earth() -> str:
-    return "Earth element created"
+from alchemy import create_air
 
+print("=== Alembic 5 ===")
+print("Accessing the alchemy module using 'from alchemy import ...'")
 
-def create_air() -> str:
-    return "Air element created"
+print("Testing create_air: ", create_air())

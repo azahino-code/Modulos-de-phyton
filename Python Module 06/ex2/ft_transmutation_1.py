@@ -1,18 +1,19 @@
 # *************************************************************************** #
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    elements.py                                        :+:      :+:    :+:   #
+#    ft_transmutation_1.py                              :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
+#    By: azahino- <azahino-@student.42urduliz.co    +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/09/11 23:18:24 by azahino-          #+#    #+#             #
-#    Updated: 2026/09/11 23:18:30 by azahino-         ###   ########.fr       #
+#    Created: 2026/09/22 19:46:57 by azahino-          #+#    #+#             #
+#    Updated: 2026/09/22 19:46:58 by azahino-         ###   ########.fr       #
 #                                                                             #
 # *************************************************************************** #
 
-def create_earth() -> str:
-    return "Earth element created"
+from alchemy import transmutation
 
-
-def create_air() -> str:
-    return "Air element created"
+print(
+    "=== Transmutation 1 ===\n"
+    "Import transmutation module directly"
+    f"Testing lead to gold: {transmutation.recipe.lead_to_gold()}"
+)

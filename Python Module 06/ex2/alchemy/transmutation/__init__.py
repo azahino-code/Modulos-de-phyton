@@ -1,18 +1,15 @@
 # *************************************************************************** #
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    elements.py                                        :+:      :+:    :+:   #
+#    __init__.py                                        :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
+#    By: azahino- <azahino-@student.42urduliz.co    +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/09/11 23:18:24 by azahino-          #+#    #+#             #
-#    Updated: 2026/09/11 23:18:30 by azahino-         ###   ########.fr       #
+#    Created: 2026/09/22 20:03:58 by azahino-          #+#    #+#             #
+#    Updated: 2026/09/22 20:03:59 by azahino-         ###   ########.fr       #
 #                                                                             #
 # *************************************************************************** #
 
-def create_earth() -> str:
-    return "Earth element created"
+from .recipes import lead_to_gold
 
-
-def create_air() -> str:
-    return "Air element created"
+__all__ = lead_to_gold()
