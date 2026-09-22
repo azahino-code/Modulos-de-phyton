@@ -10,14 +10,15 @@
 #                                                                             #
 # *************************************************************************** #
 
-def ft_recursive_count(i, n):
+def ft_recursive_count(i, n) -> None:
     if i == n:
         return print("Harvest time!")
-    print("Day ", i)
-    return (ft_recursive_count(i + 1, n))
+    else:
+        print("Day ", i)
+        ft_recursive_count(i + 1, n)
 
 
-def ft_count_harvest_recursive():
+def ft_count_harvest_recursive() -> None:
     h_days = int(input("Days until harvest: "))
     ft_recursive_count(0, h_days + 1)
 

@@ -12,7 +12,7 @@
 
 # los if funcionan casi como los de C pero hay que ponerles :
 
-def ft_plant_age():
+def ft_plant_age() -> None:
     plant_age = int(input("Enter plan age in days: "))
     if (plant_age <= 60):
         print("Plant needs more time to grow.")
