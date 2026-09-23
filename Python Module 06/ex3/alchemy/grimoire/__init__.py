@@ -1,19 +1,20 @@
 # *************************************************************************** #
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    ft_transmutation_2.py                              :+:      :+:    :+:   #
+#    __init__.py                                        :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
 #    By: azahino- <azahino-@student.42urduliz.co    +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/09/23 18:15:39 by azahino-          #+#    #+#             #
-#    Updated: 2026/09/23 18:15:39 by azahino-         ###   ########.fr       #
+#    Created: 2026/09/23 22:26:25 by azahino-          #+#    #+#             #
+#    Updated: 2026/09/23 22:26:25 by azahino-         ###   ########.fr       #
 #                                                                             #
 # *************************************************************************** #
 
-import alchemy
+from .light_spellbook import light_spell_record
 
-print(
-    "=== Transmutation 2 ===\n"
-    "Import transmutation module directly\n"
-    f"Testing lead to gold: {alchemy.lead_to_gold()}"
-)
+from .dark_spellbook import dark_spell_record
+
+all = [
+    light_spell_record,
+    dark_spell_record
+]

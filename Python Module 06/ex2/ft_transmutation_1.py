@@ -14,6 +14,6 @@ from alchemy import transmutation
 
 print(
     "=== Transmutation 1 ===\n"
-    "Import transmutation module directly"
+    "Import transmutation module directly\n"
     f"Testing lead to gold: {transmutation.lead_to_gold()}"
 )

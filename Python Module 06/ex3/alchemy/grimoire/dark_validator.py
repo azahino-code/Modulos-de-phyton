@@ -1,19 +1,19 @@
 # *************************************************************************** #
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    ft_transmutation_2.py                              :+:      :+:    :+:   #
+#    light_validator.py                                 :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
 #    By: azahino- <azahino-@student.42urduliz.co    +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/09/23 18:15:39 by azahino-          #+#    #+#             #
-#    Updated: 2026/09/23 18:15:39 by azahino-         ###   ########.fr       #
+#    Created: 2026/09/23 21:37:57 by azahino-          #+#    #+#             #
+#    Updated: 2026/09/23 21:37:57 by azahino-         ###   ########.fr       #
 #                                                                             #
 # *************************************************************************** #
 
-import alchemy
+from .dark_spellbook import dark_spell_allowed_ingredients
 
-print(
-    "=== Transmutation 2 ===\n"
-    "Import transmutation module directly\n"
-    f"Testing lead to gold: {alchemy.lead_to_gold()}"
-)
+def validate_ingredients(ingredients: str) -> str:
+    for key in dark_spell_allowed_ingredients():
+        if key in ingredients:
+            return f"{ingredients} - VALID"
+    return f"{ingredients} - INVALID"
