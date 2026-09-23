@@ -1,15 +1,19 @@
 # *************************************************************************** #
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    __init__.py                                        :+:      :+:    :+:   #
+#    ft_transmutation_2.py                              :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
+#    By: azahino- <azahino-@student.42urduliz.co    +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/09/11 23:20:37 by azahino-          #+#    #+#             #
-#    Updated: 2026/09/11 23:20:43 by azahino-         ###   ########.fr       #
+#    Created: 2026/09/23 18:15:39 by azahino-          #+#    #+#             #
+#    Updated: 2026/09/23 18:15:39 by azahino-         ###   ########.fr       #
 #                                                                             #
 # *************************************************************************** #
 
-from .transmutation import lead_to_gold
+import alchemy
 
-__all__ = [lead_to_gold]
+print(
+    "=== Transmutation 1 ===\n"
+    "Import transmutation module directly\n"
+    f"Testing lead to gold: {alchemy.lead_to_gold()}"
+)
