@@ -13,11 +13,7 @@
 from alchemy import grimoire
 
 print(
-    f"{grimoire.light_spell_record("Fantasy", "earth, sun and gold")}"
-    "\n"
-    f"{grimoire.light_spell_record("Fantasy", "sun and gold")}"
-    "\n"
-    f"{grimoire.dark_spell_record("Fantasy", "bats and frogs")}"
-    "\n"
-    f"{grimoire.light_spell_record("Fantasy", "sun and gold")}"
-    )
+    "=== Kaboom 0 ===\n"
+    "Using grimoire module directly\n"
+    f"{grimoire.light_spell_record("Fantasy", "earth, wind and fire")}"
+)

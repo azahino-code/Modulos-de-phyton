@@ -10,8 +10,6 @@
 #                                                                             #
 # *************************************************************************** #
 
-from .light_validator import validate_ingredients
-
 def light_spell_allowed_ingredients() -> list[str]:
     allowed_ingredients: list[str] = [
         "earth",
@@ -21,18 +19,17 @@ def light_spell_allowed_ingredients() -> list[str]:
     ]
     return allowed_ingredients
 
+from alchemy.grimoire.light_validator import validate_ingredients
 
 def light_spell_record(spell_name: str, ingredients: str) -> str:
     result = validate_ingredients(ingredients)
     if "VALID" in result:
-        print(
+        return(
             "Testing record light spell: Spell recorded: "
             f"{spell_name} ({result})"
         )
     else:
-        print(
+        return(
             "Testing record light spell: Spell rejected: "
             f"{spell_name} ({result})"
         )
-
-    

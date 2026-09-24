@@ -21,7 +21,6 @@ def dark_spell_allowed_ingredients() -> list[str]:
     ]
     return allowed_ingredients
 
-
 def dark_spell_record(spell_name: str, ingredients: str) -> str:
     result = validate_ingredients(ingredients)
     if "VALID" in result:
@@ -34,5 +33,3 @@ def dark_spell_record(spell_name: str, ingredients: str) -> str:
             "Testing record dark spell: Spell rejected: "
             f"{spell_name} ({result})"
         )
-
-    
