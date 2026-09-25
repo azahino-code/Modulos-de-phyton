@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::   #
 #    ft_distillation_1.py                               :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.co    +#+  +:+       +#+        #
+#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
 #    Created: 2026/09/22 18:25:58 by azahino-          #+#    #+#             #
 #    Updated: 2026/09/22 18:26:03 by azahino-         ###   ########.fr       #

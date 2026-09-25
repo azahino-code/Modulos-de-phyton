@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::   #
 #    ft_data_stream.py                                  :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.co    +#+  +:+       +#+        #
+#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
 #    Created: 2026/08/03 12:19:54 by azahino-          #+#    #+#             #
 #    Updated: 2026/08/03 12:19:55 by azahino-         ###   ########.fr       #

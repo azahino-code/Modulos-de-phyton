@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::   #
 #    ft_kaboom_1.py                                     :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.co    +#+  +:+       +#+        #
+#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
 #    Created: 2026/09/24 18:55:16 by azahino-          #+#    #+#             #
 #    Updated: 2026/09/24 18:55:17 by azahino-         ###   ########.fr       #

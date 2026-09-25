@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::   #
 #    ft_transmutation_1.py                              :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.co    +#+  +:+       +#+        #
+#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
 #    Created: 2026/09/22 19:46:57 by azahino-          #+#    #+#             #
 #    Updated: 2026/09/22 19:46:58 by azahino-         ###   ########.fr       #

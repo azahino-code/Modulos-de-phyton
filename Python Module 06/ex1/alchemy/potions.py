@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::   #
 #    potions.py                                         :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.co    +#+  +:+       +#+        #
+#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
 #    Created: 2026/09/22 17:58:53 by azahino-          #+#    #+#             #
 #    Updated: 2026/09/22 17:58:54 by azahino-         ###   ########.fr       #
