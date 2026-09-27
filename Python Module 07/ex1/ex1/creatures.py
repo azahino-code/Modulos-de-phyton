@@ -23,54 +23,11 @@ class Creature(ABC):
     def describe(self) -> None:
         return f"{self.name} is {self.type} type Creature"
 
-import capacitor
-# Tipo Fuego
-
-class Flameling(Creature):
-    def __init__(self) -> None:
-        super().__init__()
-        self.name = "Flameling"
-        self.type = "Fire"
-        self.move = "Ember"
-
-    def attack(self) -> str:
-        return f"{self.name} uses {self.move}!"
-
-class Pyrodon(Creature):
-    def __init__(self) -> None:
-        super().__init__()
-        self.name = "Pyrodon"
-        self.type = "Fire/Fliying"
-        self.move = "Flamethrower"
-
-    def attack(self) -> str:
-        return f"{self.name} uses {self.move}!"
-
-# Tipo Agua
-
-class Aquahub(Creature):
-    def __init__(self) -> None:
-        super().__init__()
-        self.name = "Aquahub"
-        self.type = "Water"
-        self.move = "Water Gun"
-
-    def attack(self) -> str:
-        return f"{self.name} uses {self.move}!"
-
-class Torragon(Creature):
-    def __init__(self) -> None:
-        super().__init__()
-        self.name = "Torragon"
-        self.type = "Water"
-        self.move = "Hydro Pump"
-
-    def attack(self) -> str:
-        return f"{self.name} uses {self.move}!"
+from .habilities import HealCapability, TransformCapability
 
 # Tipo Planta
 
-class Sproutling(Creature, capacitor.HealCapability):
+class Sproutling(Creature, HealCapability):
     def __init__(self) -> None:
         super().__init__()
         self.name = "Sproutling"
@@ -81,7 +38,7 @@ class Sproutling(Creature, capacitor.HealCapability):
     def attack(self) -> str:
         return f"{self.name} uses {self.move}!"
 
-class Bloomelle(Creature, capacitor.HealCapability):
+class Bloomelle(Creature, HealCapability):
     def __init__(self) -> None:
         super().__init__()
         self.name = "Bloomelle"
@@ -94,7 +51,7 @@ class Bloomelle(Creature, capacitor.HealCapability):
 
 #Tipo Normal
 
-class Shiftling(Creature, capacitor.TransformCapability):
+class Shiftling(Creature, TransformCapability):
     def __init__(self) -> None:
         super().__init__()
         self.name = "Shiftling"
@@ -115,7 +72,7 @@ class Shiftling(Creature, capacitor.TransformCapability):
         self.shifted = False
         return f"{self.name} returns to normal."
 
-class Morphagon(Creature, capacitor.TransformCapability):
+class Morphagon(Creature, TransformCapability):
     def __init__(self) -> None:
         super().__init__()
         self.name = "Morphagon"

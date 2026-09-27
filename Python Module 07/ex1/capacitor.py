@@ -1,41 +1,47 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#    capacitor.py                                       :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/09/27 16:06:33 by azahino-          #+#    #+#             #
-#    Updated: 2026/09/27 16:06:34 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
+# ************************************************************************** #
+#                                                                            #
+#                                                         :::      ::::::::  #
+#    capacitor.py                                          :+:      :+:    :+:  #
+#                                                     +:+ +:+         +:+    #
+#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+       #
+#                                                 +#+#+#+#+#+   +#+          #
+#    Created: 2026/09/24 20:29:28 by azahino-          #+#    #+#            #
+#    Updated: 2026/09/24 20:29:29 by azahino-         ###   ########.fr      #
+#                                                                            #
+# ************************************************************************** #
 
-from abc import ABC, classmethod
-from creatures import Creature
-
-
-class HealCapability(ABC):
-    def __init__(self):
-        pass
-
-    @classmethod
-    def heal(self, tarjet: Creature) -> None:
-        if tarjet.evolved == False:
-            return f"{self.name} heals itself for a small amount"
-        else:
-            return f"{self.name} heals itself and others for a large amount"
-        
-
-class TransformCapability(ABC):
-    def __init__(self):
-        pass
-
-    @classmethod
-    def transform(self) -> str:
-        
-
-    @classmethod
-    def revert(self) -> str:
-        ...
+from ex1 import factorys as f
 
 
+def creation(fac: f.CreatureFactory) -> f.C.Creature:
+    base = fac.create_base()
+    evolved = fac.create_evolved()
+
+    print(
+        f"{base.describe()}\n"
+        f"{base.attack()}"
+    )
+    print(
+        f"{evolved.describe()}\n"
+        f"{evolved.attack()}" 
+    )
+
+
+def battle(mons_1: f.CreatureFactory, mons_2: f.CreatureFactory) -> None:
+    base_1 = mons_1.create_base()
+    base_2 = mons_2.create_base()
+
+    print(
+        f"{base_1.describe()}\n"
+        " vs.\n"
+        f"{base_2.describe()}"
+        " fight!"
+        f"{base_1.attack()}\n"
+        f"{base_2.attack()}"
+    )
+
+print("Testing Creature with healing capability")
+creation(f.HealingCreatureFactory())
+
+print("\nTesting Creature with transform capability")
+creation(f.TransformCreatureFactory())

@@ -26,16 +26,22 @@ class CreatureFactory(ABC):
     def create_evolved(self) -> C.Creature:
         pass
 
-class FlameFactory(CreatureFactory):
-    def create_base(self) -> C.Creature:
-        return C.Flameling()
-
-    def create_evolved(self) -> C.Creature:
-        return C.Pyrodon()
-
-class WaterFactory(CreatureFactory):
     def create_base(self) -> C.Creature:
         return C.Aquahub()
 
     def create_evolved(self) -> C.Creature:
         return C.Torragon()
+
+class HealingCreatureFactory(CreatureFactory):
+    def create_base(self) -> C.Creature:
+        return C.Sproutling()
+
+    def create_evolved(self) -> C.Creature:
+        return C.Bloomelle()
+
+class TransformCreatureFactory(CreatureFactory):
+    def create_base(self) -> C.Creature:
+        return C.Shiftling()
+
+    def create_evolved(self) -> C.Creature:
+        return C.Morphagon()

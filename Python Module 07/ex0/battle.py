@@ -10,7 +10,7 @@
 #                                                                            #
 # ************************************************************************** #
 
-import factorys as f
+from ex0 import factorys as f
 
 
 def creation(fac: f.CreatureFactory) -> f.C.Creature:

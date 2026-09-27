@@ -30,10 +30,9 @@ class Flameling(Creature):
         super().__init__()
         self.name = "Flameling"
         self.type = "Fire"
-        self.move = "Ember"
 
     def attack(self) -> str:
-        return f"{self.name} uses {self.move}!"
+        return f"{self.name} uses Ember!"
 
 
 class Pyrodon(Creature):
@@ -41,27 +40,24 @@ class Pyrodon(Creature):
         super().__init__()
         self.name = "Pyrodon"
         self.type = "Fire/Fliying"
-        self.move = "Flamethrower"
 
     def attack(self) -> str:
-        return f"{self.name} uses {self.move}!"
+        return f"{self.name} uses Flamethrower!"
 
 class Aquahub(Creature):
     def __init__(self) -> None:
         super().__init__()
         self.name = "Aquahub"
         self.type = "Water"
-        self.move = "Water Gun"
 
     def attack(self) -> str:
-        return f"{self.name} uses {self.move}!"
+        return f"{self.name} uses Water Gun!"
 
 class Torragon(Creature):
     def __init__(self) -> None:
         super().__init__()
         self.name = "Torragon"
         self.type = "Water"
-        self.move = "Hydro Pump"
 
     def attack(self) -> str:
-        return f"{self.name} uses {self.move}!"
+        return f"{self.name} uses Hydro Pump!"
