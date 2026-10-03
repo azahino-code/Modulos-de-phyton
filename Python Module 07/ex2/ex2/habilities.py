@@ -10,14 +10,15 @@
 #                                                                             #
 # *************************************************************************** #
 
-from abc import ABC
-from .creatures import Creature
+from abc import ABC, classmethod
+from creatures import Creature
 
 
 class HealCapability(ABC):
     def __init__(self):
         pass
 
+    @classmethod
     def heal(self, tarjet: Creature) -> None:
         if tarjet.evolved == False:
             return f"{self.name} heals itself for a small amount"
