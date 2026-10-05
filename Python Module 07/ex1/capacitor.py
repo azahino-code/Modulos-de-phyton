@@ -19,26 +19,14 @@ def creation(fac: f.CreatureFactory) -> f.C.Creature:
 
     print(
         f"{base.describe()}\n"
-        f"{base.attack()}"
+        f"{base.attack()}\"
+        f"{base.heal()}"
     )
     print(
         f"{evolved.describe()}\n"
         f"{evolved.attack()}" 
     )
 
-
-def battle(mons_1: f.CreatureFactory, mons_2: f.CreatureFactory) -> None:
-    base_1 = mons_1.create_base()
-    base_2 = mons_2.create_base()
-
-    print(
-        f"{base_1.describe()}\n"
-        " vs.\n"
-        f"{base_2.describe()}"
-        " fight!"
-        f"{base_1.attack()}\n"
-        f"{base_2.attack()}"
-    )
 
 print("Testing Creature with healing capability")
 creation(f.HealingCreatureFactory())

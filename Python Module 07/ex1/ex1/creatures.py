@@ -23,6 +23,20 @@ class Creature(ABC):
     def describe(self) -> None:
         return f"{self.name} is {self.type} type Creature"
 
+    @abstractmethod
+    def transform(self) -> str:
+        ...
+
+    @abstractmethod
+    def revert(self) -> str:
+        ...
+
+    @abstractmethod
+    def heal(self) -> str:
+        ...
+
+    
+
 from .habilities import HealCapability, TransformCapability
 
 # Tipo Planta
@@ -33,6 +47,7 @@ class Sproutling(Creature, HealCapability):
         self.name = "Sproutling"
         self.type = "Grass"
         self.move = "Vine whip"
+#        self.hab = HealCapability.heal()
         self.evolved = False
 
     def attack(self) -> str:
@@ -44,6 +59,7 @@ class Bloomelle(Creature, HealCapability):
         self.name = "Bloomelle"
         self.type = "Grass/Fairy"
         self.move = "Petal Dance"
+#        self.hab = HealCapability.heal()
         self.evolved = True
 
     def attack(self) -> str:
@@ -77,6 +93,8 @@ class Morphagon(Creature, TransformCapability):
         super().__init__()
         self.name = "Morphagon"
         self.type = "Normal/Dragon"
+#       self.hab = TransformCapability.transform()
+#       self.hab2 = TransformCapability.revert()
         self.shifted = False
 
     def attack(self) -> str:
