@@ -1,12 +1,12 @@
 # *************************************************************************** #
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    ft_plant_types.py                                  :+:      :+:    :+:   #
+#   ft_plant_types.py                                   :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
+#   By: azahino- <azahino-@student.42urduliz.com>   +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/07/23 15:29:56 by azahino-          #+#    #+#             #
-#    Updated: 2026/07/23 15:30:08 by azahino-         ###   ########.fr       #
+#   Created: 2026/07/23 15:29:56 by azahino-           #+#    #+#             #
+#   Updated: 2026/10/06 18:38:15 by azahino-          ###   ########.fr       #
 #                                                                             #
 # *************************************************************************** #
 
@@ -109,18 +109,19 @@ class Vegetable(Plant):
         return text + f"Nutritional value: {self.nutritional_value}."
 
 
-print("=== Garden Plant Types ===")
-print("=== Flower")
-plant1 = Flower("Rose", 15, 10, "red")
-print(plant1.show())
-plant1.ask_bloom()
-print(plant1.show())
-print("\n=== Tree")
-plant2 = Tree("Oak", 200, 365, 5)
-print(plant2.show())
-plant2.pbuce_shade()
-print("\n=== Vegetable")
-plant3 = Vegetable("Tomato", 5, 10, "April", 0)
-print(plant3.show())
-plant3.grow_up(20)
-print(plant3.show())
+if __name__ == "__main__":
+    print("=== Garden Plant Types ===")
+    print("=== Flower")
+    plant1 = Flower("Rose", 15, 10, "red")
+    print(plant1.show())
+    plant1.ask_bloom()
+    print(plant1.show())
+    print("\n=== Tree")
+    plant2 = Tree("Oak", 200, 365, 5)
+    print(plant2.show())
+    plant2.pbuce_shade()
+    print("\n=== Vegetable")
+    plant3 = Vegetable("Tomato", 5, 10, "April", 0)
+    print(plant3.show())
+    plant3.grow_up(20)
+    print(plant3.show())

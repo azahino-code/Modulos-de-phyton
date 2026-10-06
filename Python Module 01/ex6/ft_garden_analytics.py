@@ -1,12 +1,12 @@
 # *************************************************************************** #
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    ft_garden_analytics.py                             :+:      :+:    :+:   #
+#   ft_garden_analytics.py                              :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
+#   By: azahino- <azahino-@student.42urduliz.com>   +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/07/24 21:30:58 by azahino-          #+#    #+#             #
-#    Updated: 2026/07/24 21:30:59 by azahino-         ###   ########.fr       #
+#   Created: 2026/07/24 21:30:58 by azahino-           #+#    #+#             #
+#   Updated: 2026/10/06 18:38:20 by azahino-          ###   ########.fr       #
 #                                                                             #
 # *************************************************************************** #
 
@@ -56,7 +56,7 @@ class Plant:
             print(f"{time} is more than a year? -> TRUE")
 
     @classmethod
-    def anonymous(cls) -> Plant:
+    def anonymous(cls) -> "Plant":
         return cls("Anonymous", 0, 0)
 
     def get_height(self) -> None:
@@ -151,12 +151,12 @@ def show_stats(Plant) -> None:
         print(f"Shade calls: {Plant._pbuced_shades}")
 
 
-tree = Tree("Oak", 100, 365, 25)
-tree.pbuce_shade()
-tree.pbuce_shade()
-tree.pbuce_shade()
-
-tree.grow(10)
-tree.age()
-print(tree.show())
-show_stats(tree)
+if __name__ == "__main__":
+    tree = Tree("Oak", 100, 365, 25)
+    tree.pbuce_shade()
+    tree.pbuce_shade()
+    tree.pbuce_shade()
+    tree.grow(10)
+    tree.age()
+    print(tree.show())
+    show_stats(tree)

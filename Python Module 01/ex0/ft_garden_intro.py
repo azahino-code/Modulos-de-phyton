@@ -1,23 +1,14 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#    ft_garden_intro.py                                 :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com    +#+  +:+       +#+       #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/07/17 10:38:54 by azahino-          #+#    #+#             #
-#    Updated: 2026/07/18 21:22:31 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
-
-# !/bin/bash
 
 def ft_garden_intro() -> None:
-    print("=== Welcome o My Garden ===")
+    print("=== Welcome to My Garden ===")
     self = "Rose"
     height = "25cm"
-    age = int(30)
-    print("self: ", self, "\nHeight: ", height, f"\nAge: {age} days\n")
+    age = "30"
+    print(
+        "Plant: " + self,
+        "\nHeight: " + height,
+        "\nAge: " + age + " days\n"
+        )
     print("=== End of Program ===")
 
 
