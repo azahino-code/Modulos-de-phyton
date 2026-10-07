@@ -1,14 +1,4 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#   ft_garden_analytics.py                              :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#   By: azahino- <azahino-@student.42urduliz.com>   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#   Created: 2026/07/24 21:30:58 by azahino-           #+#    #+#             #
-#   Updated: 2026/10/06 18:38:20 by azahino-          ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
+#!/usr/bin/env python3
 
 class Plant:
 
@@ -34,40 +24,40 @@ class Plant:
 
     def set_height(self, new_height) -> None:
         if new_height < 0:
-            print(f"{self.name}: Error, height can't be negative.")
+            print({self.name} + ": Error, height can't be negative.")
             print("Height update rejected.")
         else:
             self.height = new_height
-            print(f"Height updated: {self.height}cm")
+            print("Height updated: " + self.height + "cm")
 
     def set_age(self, new_age) -> None:
         if new_age < 0:
-            print(f"{self.name}: Error, age can't be negative.")
+            print(self.name + ": Error, age can't be negative.")
             print("Age update rejected.")
         else:
             self.ages = new_age
-            print(f"Age updated: {self.ages} days")
+            print("Age updated: " + self.ages + " days")
 
     @staticmethod
-    def static_method(time) -> None:
+    def static_method(time: int) -> None:
         if time < 365:
-            print(f"{time} is more than a year? -> FALSE")
+            print("Is " + str(time) + " more than a year? -> FALSE")
         else:
-            print(f"{time} is more than a year? -> TRUE")
+            print("Is " + str(time) + " is more than a year? -> TRUE")
 
     @classmethod
     def anonymous(cls) -> "Plant":
         return cls("Anonymous", 0, 0)
 
     def get_height(self) -> None:
-        print(f"{self.name}: actual height: {self.height}cm.")
+        print(self.name + ": actual height: {self.height}cm.")
 
     def get_age(self) -> None:
-        print(f"{self.ages}: actual age: {self.ages} days old.")
+        print(self.ages + ": actual age: {self.ages} days old.")
 
     def show(self) -> str:
         self._stats._show_calls += 1
-        return f"{self.name}: {round(self.height, 1)}cm, {self.ages} days old"
+        return self.name + ": {round(self.height, 1)}cm, {self.ages} days old"
 
 
 class Tree(Plant):
@@ -78,15 +68,16 @@ class Tree(Plant):
 
     def pbuce_shade(self) -> None:
         self._pbuced_shades += 1
-        print(f"[Asking the {self.name} to pbuce shade]")
-        str1 = f"Tree {self.name} now pbuces a shade of"
-        str2 = f" {self.height}cm long and {self.trunk_diameter}cm wide."
-        print(str1 + str2)
+        print("[Asking the " + self.name + "to pbuce shade]")
+        str1 = "Tree " + self.name + "now pbuces a shade of "
+        str2 =  str(self.height) + "cm long and "
+        print(str1 + str2 + str(self.trunk_diameter) + "cm wide.")
 
     def show(self) -> str:
         text = super().show()
+        diameter = round(self.trunk_diameter, 1)
         return (
-            text + '\n' + f"Diameter: {round(self.trunk_diameter, 1)}cm."
+            text + '\n' + "Diameter: " + str(diameter) + "cm."
             )
 
 
@@ -97,19 +88,19 @@ class Flower(Plant):
         self.is_blooming = False
 
     def ask_bloom(self) -> None:
-        print(f"[Asking the {self.name} to bloom]")
+        print("[Asking the " + self.name + " to bloom]")
         self.is_blooming = True
 
     def show(self) -> str:
         text = super().show()
-        text = text + '\n' + f"Color: {self.color}.\n"
+        text = text + '\n' + "Color: " + self.color + ".\n"
         if self.is_blooming:
             return (
-                text + f"{self.name} is blooming beautifully!"
+                text + self.name + " is blooming beautifully!"
                 )
         else:
             return (
-                text + f"{self.name} has not bloomed yet."
+                text + self.name + " has not bloomed yet."
                 )
 
 
@@ -120,7 +111,10 @@ class Seed(Flower):
 
     def show(self) -> str:
         text = super().show()
-        return text + f"\n{self.name}: seeds: {self.seeds_number}."
+        return (
+            text + "\n" + self.name + ": seeds: ",
+            str(self.seeds_number) + "."
+		)
 
 
 class Vegetable(Plant):
@@ -130,7 +124,7 @@ class Vegetable(Plant):
         self.nutritional_value = nutritional_value
 
     def grow_up(self, days) -> None:
-        print(f"[make {self.name} grow and age for {days} days.]")
+        print("[make " + self.name + " grow and age for " + {days} + " days.]")
         i = 0
         for i in range(days):
             super().grow(1)
@@ -139,24 +133,54 @@ class Vegetable(Plant):
 
     def show(self) -> str:
         text = super().show()
-        text = text = '\n' + f"Season: {self.harvest_season}.\n"
-        return text + f"Nutritional value: {self.nutritional_value}."
+        text = text = '\n' + "Season: " + self.harvest_season + ".\n"
+        return text + "Nutritional value: " + self.nutritional_value + "."
 
 
-def show_stats(Plant) -> None:
-    print(f"Grow calls: {Plant._stats._grow_calls}")
-    print(f"Age calls: {Plant._stats._age_calls}")
-    print(f"Show calls: {Plant._stats._show_calls}")
+def show_stats(plant: Plant) -> None:
+    print(
+        "Stats: " + str(plant._stats._grow_calls),
+        "grow " + str(plant._stats._age_calls),
+        "age " + str(plant._stats._show_calls) + " show"
+    )
     if isinstance(Plant, Tree):
-        print(f"Shade calls: {Plant._pbuced_shades}")
+        print("Shade calls: " + Plant._pbuced_shades)
 
 
 if __name__ == "__main__":
+    print(
+        "=== Garden stadistic ===\n=== Check year-old"
+	)
+    plant = Flower("Rose", 25, 10, "red")
+    plant.static_method(30)
+    plant.static_method(400)
+    print(
+        "\n=== Flower\n" + plant.show()
+	)
+    show_stats(plant)
+    print("[asking the rose to grow an bloom]")
+    plant.grow(10)
+    plant.ask_bloom()
+    print(plant.show())
+    
     tree = Tree("Oak", 100, 365, 25)
+    print(
+        "\n===Tree\n" + tree.show(),
+        "[asking the oak to produce shade]"
+    )
     tree.pbuce_shade()
-    tree.pbuce_shade()
-    tree.pbuce_shade()
-    tree.grow(10)
-    tree.age()
-    print(tree.show())
     show_stats(tree)
+    seed = Seed("Sunflower", 80, 45, "yellow", 0)
+    print("=== Seed\n")
+    print(seed.show())
+    print("[make sunflower grow, age and bloom]")
+    seed.grow(55)
+    seed.age()
+    seed.ask_bloom()
+    print(seed.show())
+    anonimous = Plant.anonymous()
+    print(
+        "\n=== Anonymous\n",
+        anonimous.show()
+	)
+    show_stats(anonimous)

@@ -6,7 +6,7 @@
 #   By: azahino- <azahino-@student.42urduliz.com>   +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
 #   Created: 2026/07/16 12:25:33 by azahino-           #+#    #+#             #
-#   Updated: 2026/10/06 17:45:32 by azahino-          ###   ########.fr       #
+#   Updated: 2026/10/07 16:40:47 by azahino-          ###   ########.fr       #
 #                                                                             #
 # *************************************************************************** #
 
@@ -16,4 +16,4 @@ def ft_count_harvest_iterative() -> None:
         print("Day", i)
     print("Harvest time!")
 
-# ft_count_harvest_iterative()
+ft_count_harvest_iterative()

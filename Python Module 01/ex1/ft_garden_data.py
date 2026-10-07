@@ -1,14 +1,4 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#   ft_garden_data.py                                   :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#   By: azahino- <azahino-@student.42urduliz.com>   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#   Created: 2026/07/17 11:30:54 by azahino-           #+#    #+#             #
-#   Updated: 2026/10/06 18:37:51 by azahino-          ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
+#!/usr/bin/env python3
 
 class Plant:
     def __init__(self, name, cm, days):
@@ -28,5 +18,3 @@ if __name__ == "__main__":
     plant1.show()
     plant2.show()
     plant3.show()
-
-# self("rose", "25", "30").show() esto tambien funciona

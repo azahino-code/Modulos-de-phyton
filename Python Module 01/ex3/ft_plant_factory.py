@@ -1,14 +1,4 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#   ft_plant_factory.py                                 :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#   By: azahino- <azahino-@student.42urduliz.com>   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#   Created: 2026/07/22 15:17:41 by azahino-           #+#    #+#             #
-#   Updated: 2026/10/06 18:47:11 by azahino-          ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
+#!/usr/bin/env python3
 
 class Plant:
     def __init__(self, name, starting_cm, starting_days) -> None:
