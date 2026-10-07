@@ -1,16 +1,4 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#    ft_garden_data.py                                  :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com    +#+  +:+       +#+       #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/07/17 11:30:54 by azahino-          #+#    #+#             #
-#    Updated: 2026/07/18 21:36:56 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
-
-# ! /bin/bash
+#!/usr/bin/env python3
 
 class Plant:
     def __init__(self, name, cm, days):
@@ -22,12 +10,11 @@ class Plant:
         print(f"{self.name}: {self.heigh}cm, {self.age} days old")
 
 
-plant1 = Plant("rose", "25", "30")
-plant2 = Plant("Sunflower", "80", "45")
-plant3 = Plant("Cactus", "15", "120")
-print("=== Garden Plant Registry ===")
-plant1.show()
-plant2.show()
-plant3.show()
-
-# self("rose", "25", "30").show() esto tambien funciona
+if __name__ == "__main__":
+    plant1 = Plant("rose", "25", "30")
+    plant2 = Plant("Sunflower", "80", "45")
+    plant3 = Plant("Cactus", "15", "120")
+    print("=== Garden Plant Registry ===")
+    plant1.show()
+    plant2.show()
+    plant3.show()

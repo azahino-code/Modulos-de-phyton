@@ -1,19 +1,19 @@
 # *************************************************************************** #
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    ft_count_harvest_iterative.py                      :+:      :+:    :+:   #
+#   ft_count_harvest_iterative.py                       :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
+#   By: azahino- <azahino-@student.42urduliz.com>   +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/07/16 12:25:33 by azahino-          #+#    #+#             #
-#    Updated: 2026/07/16 13:09:27 by azahino-         ###   ########.fr       #
+#   Created: 2026/07/16 12:25:33 by azahino-           #+#    #+#             #
+#   Updated: 2026/10/07 16:40:47 by azahino-          ###   ########.fr       #
 #                                                                             #
 # *************************************************************************** #
 
 def ft_count_harvest_iterative() -> None:
     h_time = int(input("Days until harvest: "))
-    for i in range(h_time + 1):
+    for i in range(1, h_time + 1):
         print("Day", i)
     print("Harvest time!")
 
-# ft_count_harvest_iterative()
+ft_count_harvest_iterative()
