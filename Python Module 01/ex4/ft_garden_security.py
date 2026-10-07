@@ -31,8 +31,7 @@ class Plant:
         else:
             self.ages = new_age
             print(
-                "Age updated: ",
-                str(self.ages) + "days"
+                f"Age updated: {str(self.ages)} days"
             )
 
     def get_height(self) -> None:
@@ -50,8 +49,7 @@ class Plant:
     def show(self) -> str:
         h = round(self.height, 2)
         return (
-            self.name + ": " + str(h) + "cm, ",
-            str(self.ages) + " days old"
+            f"{self.name}: {str(h)}cm, {str(self.ages)} days old"
 		)
 
 
@@ -61,6 +59,7 @@ if __name__ == "__main__":
     print("Plant created: ", plant1.show(), "\n")
     plant1.set_height(25)
     plant1.set_age(30)
+    print()
     plant1.set_height(-25)
     plant1.set_age(-30)
-    print("Current state: ", plant1.show())
+    print(f"\nCurrent state:  {plant1.show()}")

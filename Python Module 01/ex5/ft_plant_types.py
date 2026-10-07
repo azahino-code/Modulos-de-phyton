@@ -43,9 +43,9 @@ class Tree(Plant):
         super().__init__(name, height, ages)
         self.trunk_diameter = trunk_diameter
 
-    def pbuce_shade(self) -> None:
-        print(f"[Asking the {self.name} to pbuce shade]")
-        str1 = f"Tree {self.name} now pbuces a shade of"
+    def produce_shade(self) -> None:
+        print(f"[Asking the {self.name} to produce shade]")
+        str1 = f"Tree {self.name} now produces a shade of"
         str2 = f" {self.height}cm long and {self.trunk_diameter}cm wide."
         print(str1 + str2)
 
@@ -95,7 +95,7 @@ class Vegetable(Plant):
 
     def show(self) -> str:
         text = super().show()
-        text = text = '\n' + f"Season: {self.harvest_season}.\n"
+        text = text + '\n' + f"Harvest season: {self.harvest_season}.\n"
         return text + f"Nutritional value: {self.nutritional_value}."
 
 
@@ -109,7 +109,7 @@ if __name__ == "__main__":
     print("\n=== Tree")
     plant2 = Tree("Oak", 200, 365, 5)
     print(plant2.show())
-    plant2.pbuce_shade()
+    plant2.produce_shade()
     print("\n=== Vegetable")
     plant3 = Vegetable("Tomato", 5, 10, "April", 0)
     print(plant3.show())

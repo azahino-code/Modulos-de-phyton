@@ -13,18 +13,16 @@ class Plant:
         self.days += 1
 
     def show(self) -> None:
-        h = round(plant.height, 3)
-        str1 = plant.name + ": " + str(h)
-        print(str1 + "cm, " + str(plant.days) + " days old")
+        str1 = f"{plant.name}: {round(plant.height, 2)}"
+        print(str1 + f"cm, {plant.days} days old")
 
 
-if __name__ == "__main__":
-    plant = Plant("rose", 0.32, 0)
-    print("=== Garden Plant Growth ===")
+plant = Plant("rose", 0.32, 0)
+print("=== Garden Plant Growth ===")
+plant.show()
+i = 1
+for i in range(7):
+    plant.grow()
+    plant.age()
+    print(f"=== Day {i} ===")
     plant.show()
-    i = 1
-    for i in range(7):
-        plant.grow()
-        plant.age()
-        print(f"=== Day {i} ===")
-        plant.show()
