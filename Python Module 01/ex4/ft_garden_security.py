@@ -1,33 +1,33 @@
 #!/usr/bin/env python3
 
 class Plant:
-    def __init__(self, name, cm, age) -> None:
-        self.name = name
-        self.height = float(cm)
-        self.ages = int(age)
+    def __init__(self, name: str, cm: float, age: int) -> None:
+        self.name: str = name
+        self.height: float = cm
+        self.ages: int = age
 
-    def grow(self, growth) -> None:
+    def grow(self, growth: float) -> None:
         self.height += growth
 
     def age(self) -> None:
         self.ages += 1
 
-    def set_height(self, new_height) -> None:
+    def set_height(self, new_height: float) -> None:
         if new_height < 0:
             print(
-				self.name + ": Error, height can't be negative."
-				"\nHeight update rejected."
-			)
+                self.name + ": Error, height can't be negative." +
+                "\nHeight update rejected."
+            )
         else:
             self.height = new_height
             print("Height updated: " + str(self.height) + " cm")
 
-    def set_age(self, new_age) -> None:
+    def set_age(self, new_age: int) -> None:
         if new_age < 0:
             print(
                 self.name + ": Error, age can't be negative."
                 "\nAge update rejected."
-			)
+            )
         else:
             self.ages = new_age
             print(
@@ -42,7 +42,7 @@ class Plant:
 
     def get_age(self) -> None:
         print(
-            self.ages + " actual age: ",
+            str(self.ages) + " actual age: ",
             str(self.ages) + " days old."
         )
 
@@ -50,7 +50,7 @@ class Plant:
         h = round(self.height, 2)
         return (
             f"{self.name}: {str(h)}cm, {str(self.ages)} days old"
-		)
+        )
 
 
 if __name__ == "__main__":

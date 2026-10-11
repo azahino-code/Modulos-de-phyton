@@ -2,9 +2,9 @@
 
 def ft_garden_intro() -> None:
     print("=== Welcome to My Garden ===")
-    self = "Rose"
-    height = "25cm"
-    age = int(30)
+    self: str = "Rose"
+    height: str = "25cm"
+    age: str = "30"
     print("self: ", self, "\nHeight: ", height, f"\nAge: {age} days\n")
     print("=== End of Program ===")
 
