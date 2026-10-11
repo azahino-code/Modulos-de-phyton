@@ -1,14 +1,4 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#    ft_finally_block.py                                :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/07/27 19:14:20 by azahino-          #+#    #+#             #
-#    Updated: 2026/07/27 19:14:21 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
+#!/usr/bin/env python3
 
 class PlantError(Exception):
     def __init__(self, message="There was an unknown error.") -> None:
@@ -18,9 +8,9 @@ class PlantError(Exception):
 def water_plant(plant_name: str) -> None:
     name = plant_name
     if name == plant_name.capitalize():
-        print(f"{plant_name} is watered!")
+        print(f"{plant_name}: [OK]")
     else:
-        raise PlantError(f"{plant_name} is not capitalized.")
+        raise PlantError(f"Invalid plant name to water: {plant_name}")
 
 
 def test_watering_system() -> None:
@@ -35,5 +25,5 @@ def test_watering_system() -> None:
     finally:
         print("Closing watering system...")
 
-
-test_watering_system()
+if __name__ == "__main__":
+    test_watering_system()

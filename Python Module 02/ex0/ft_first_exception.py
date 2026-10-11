@@ -1,22 +1,12 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#    ft_first_exception.py                              :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/07/26 14:53:43 by azahino-          #+#    #+#             #
-#    Updated: 2026/07/26 14:53:44 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
+#!/usr/bin/env python3
 
 def input_temperature(temp_str: str) -> None:
     print(f"Input data is '{temp_str}'")
     try:
-        temp_int = int(temp_str)
+        temp_int: int = int(temp_str)
         print(f"Temperature is now {temp_int}ºC\n")
     except ValueError as error:
-        print(error)
+        print(f"Caught input_temperature error: {error}")
 
 
 def test_temperature() -> None:
@@ -26,4 +16,5 @@ def test_temperature() -> None:
     print("\nAll test completed - program didn't crash!")
 
 
-test_temperature()
+if __name__ == "__main__":
+    test_temperature()

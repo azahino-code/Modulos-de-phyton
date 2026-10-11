@@ -1,27 +1,17 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#    ft_custom_errors.py                                :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/07/27 09:29:50 by azahino-          #+#    #+#             #
-#    Updated: 2026/07/27 09:29:51 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
+#!/usr/bin/env python3
 
 class GardenError(Exception):
-    def __init__(self, message="Unknown garden error") -> None:
+    def __init__(self, message: str = "Unknown garden error") -> None:
         self.error = message
 
 
 class PlantError(GardenError):
-    def __init__(self, message="Unknown plant error") -> None:
+    def __init__(self, message: str = "Unknown plant error") -> None:
         self.error = message
 
 
 class WaterError(GardenError):
-    def __init__(self, message="Unknown water error") -> None:
+    def __init__(self, message: str = "Unknown water error") -> None:
         self.error = message
 
 
@@ -61,15 +51,16 @@ def check_water(litre: int) -> None:
         print(f"Caught WaterError: {error}")
 
 
-print("=== Custom Garden Errors Demo ===\n")
-print("Testing GardenError...")
-check_garden(3, 8)
-check_garden(3, 34)
-check_garden(1, 9)
-print("\nTestin PlantError...")
-check_plant(1)
-check_plant(5)
-print("\nTestin WaterError...")
-check_water(5432)
-check_water(3)
-print("\nAll custom error types work correctly!")
+if __name__ == "__main__":
+    print("=== Custom Garden Errors Demo ===\n")
+    print("Testin PlantError...")
+    check_plant(1)
+    check_plant(5)
+    print("\nTestin WaterError...")
+    check_water(5432)
+    check_water(3)
+    print("\nTesting catching all garden error...")
+    check_garden(3, 8)
+    check_garden(1, 34)
+    check_garden(1, 9)
+    print("\nAll custom error types work correctly!")

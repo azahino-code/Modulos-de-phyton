@@ -1,14 +1,4 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#    ft_different_errors.py                             :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/07/27 08:37:39 by azahino-          #+#    #+#             #
-#    Updated: 2026/07/27 08:37:40 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
+#!/usr/bin/env python3
 
 def garden_operations(operation_numbers: int) -> None:
     try:
@@ -42,5 +32,6 @@ def test_error_types() -> None:
     print("\nAll error types tested succesafully!")
 
 
-print(" === Garden Error Types Demo ===")
-test_error_types()
+if __name__ == "__main__":
+    print(" === Garden Error Types Demo ===")
+    test_error_types()
