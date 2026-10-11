@@ -139,17 +139,17 @@ class Vegetable(Plant):
 def show_stats(plant: Plant) -> None:
     if isinstance(plant, Tree):
         print(
-            f"[stadistics for {plant.name}]\n",
-            "Stats: " + str(plant._stats._grow_calls),
-            "grow " + str(plant._stats._age_calls),
-            "age " + str(plant._stats._show_calls) + " show",
+            f"[stadistics for {plant.name}]\n" +
+            "Stats: " + str(plant._stats._grow_calls) +
+            "grow " + str(plant._stats._age_calls) +
+            "age " + str(plant._stats._show_calls) + " show" +
             f"\n {plant._produced_shades} shade"
     )
     else:
         print(
-            f"[stadistics for {plant.name}]\n",
-            "Stats: " + str(plant._stats._grow_calls),
-            "grow " + str(plant._stats._age_calls),
+            f"[stadistics for {plant.name}]\n" +
+            "Stats: " + str(plant._stats._grow_calls) +
+            "grow " + str(plant._stats._age_calls) +
             "age " + str(plant._stats._show_calls) + " show"
         )
 
@@ -188,7 +188,6 @@ if __name__ == "__main__":
     print(seed.show())
     anonimous = Plant.anonymous()
     print(
-        "\n=== Anonymous\n",
-        anonimous.show()
+        "\n=== Anonymous\n" + anonimous.show()
 	)
     show_stats(anonimous)
