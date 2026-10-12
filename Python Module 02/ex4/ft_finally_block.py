@@ -1,29 +1,49 @@
 #!/usr/bin/env python3
 
 class PlantError(Exception):
-    def __init__(self, message="There was an unknown error.") -> None:
-        self.error = message
+    def __init__(self, message: str = "") -> None:
+        ...
 
 
 def water_plant(plant_name: str) -> None:
-    name = plant_name
-    if name == plant_name.capitalize():
+    if plant_name == plant_name.capitalize():
         print(f"{plant_name}: [OK]")
     else:
-        raise PlantError(f"Invalid plant name to water: {plant_name}")
+        raise PlantError(f"Invalid plant name to water: '{plant_name}'")
 
 
 def test_watering_system() -> None:
-    print("You have open watering system!\n")
+    print("=== Garden Watering System ===\n")
     try:
-        water_plant("Tomate")
-        water_plant("PotAto")
+        print("Testing valid plants...")
+        print("Opening watering system")
+        water_plant("Tomat")
         water_plant("Lettuce")
-        print("\nAll plants have been watered!")
+        water_plant("Carrots")
+
     except PlantError as error:
-        print(f"PlantError detected: {error}\n")
+        print(
+            f"PlantError detected: {error}\n" +
+            "... ending test and returnin to main\n"
+        )
+
+    try:
+        print(
+            "\nTesting invalid plants...\nOpening watering system"
+        )
+        water_plant("Tomato")
+        water_plant("lettuce")
+        water_plant("Carrot")
+
+    except PlantError as error:
+        print(
+            f"PlantError detected: {error}\n" +
+            "... ending test and returnin to main\n"
+        )
     finally:
-        print("Closing watering system...")
+        print("Closing watering system...\n")
+    print("Cleanup always happens, even with errors!")
+
 
 if __name__ == "__main__":
     test_watering_system()
