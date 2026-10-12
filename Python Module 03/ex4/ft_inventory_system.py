@@ -1,14 +1,4 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#    ft_inventory_system.py                             :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/08/02 14:30:28 by azahino-          #+#    #+#             #
-#    Updated: 2026/08/02 14:30:29 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
+#!/usr/bin/env python3
 
 import sys
 
@@ -18,7 +8,7 @@ class Error(Exception):
 
 
 listerine = sys.argv[1:]
-bag: dict = {}
+bag: dict[str, int] = {}
 i: int = 0
 try:
     while i < len(listerine):
@@ -38,26 +28,27 @@ except ValueError as error:
     sys.exit()
 
 
-print("=== Inventory System Analysis ===")
-keys = list(bag.keys())
-values = list(bag.values())
-total = sum(bag.values())
-print(f"Got inventory: {bag}")
-print(f"Item list: {keys}")
-print(f"Total quantity of the {len(bag.keys())} items: {total}")
-i = 0
-maxi = 0
-mini = 2147483647
-while i < len(keys):
-    print(f"Item {keys[i]} represents {round((values[i]/total)*100, 1)}")
-    if mini > values[i]:
-        mini = values[i]
-        min_q = [keys[i], values[i]]
-    if maxi < values[i]:
-        maxi = values[i]
-        maxi_q = [keys[i], values[i]]
-    i += 1
-print(f"Item most abundant is: {maxi_q[0]} with quantity {maxi_q[1]}")
-print(f"Item most abundant is: {min_q[0]} with quantity {min_q[1]}")
-bag.update({"Magical_item": 1})
-print(f"Inventori updated: {bag}")
+if __name__ == "__main__":
+    print("=== Inventory System Analysis ===")
+    keys = list(bag.keys())
+    values = list(bag.values())
+    total = sum(bag.values())
+    print(f"Got inventory: {bag}")
+    print(f"Item list: {keys}")
+    print(f"Total quantity of the {len(bag.keys())} items: {total}")
+    i = 0
+    maxi = 0
+    mini = 2147483647
+    while i < len(keys):
+        print(f"Item {keys[i]} represents {round((values[i]/total)*100, 1)}")
+        if mini > values[i]:
+            mini = values[i]
+            min_q = [keys[i], values[i]]
+        if maxi < values[i]:
+            maxi = values[i]
+            maxi_q = [keys[i], values[i]]
+        i += 1
+    print(f"Item most abundant is: {maxi_q[0]} with quantity {maxi_q[1]}")
+    print(f"Item most abundant is: {min_q[0]} with quantity {min_q[1]}")
+    bag.update({"Magical_item": 1})
+    print(f"Inventori updated: {bag}")

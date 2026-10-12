@@ -1,14 +1,4 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#    data_alchemist.py                                  :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/08/07 19:53:19 by azahino-          #+#    #+#             #
-#    Updated: 2026/08/07 19:53:20 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
+#!/usr/bin/env python3
 
 import random
 
@@ -28,25 +18,29 @@ def only_caps(names: list[str]) -> list[str]:
     return return_list
 
 
-player_l = ['Anne', "bob", "Ca", "Dyl", "En", "Greg", "jon", "kev", "Liam"]
-cap_list: list[str] = capitalize_names(player_l)
-only_cap_list: list[str] = only_caps(player_l)
+if __name__ == "__main__":
+    player_l = ['Anne', "bob", "Ca", "Dyl", "En", "Greg", "jon", "kev", "Liam"]
+    cap_list: list[str] = capitalize_names(player_l)
+    only_cap_list: list[str] = only_caps(player_l)
 
-print(f"Initial list of players: {player_l}")
+    print(
+        f"Initial list of players: {player_l}\n\n"
+        f"New list with all names capitalized: {cap_list}\n"
+        f"New list of capitalized names only: {only_cap_list}\n"
+    )
 
-print(f"New list with all names capitalized: {cap_list}")
+    names_with_scores: dict[str, int] = {}
+    for key in cap_list:
+        names_with_scores[key] = random.randint(0, 1000)
 
-print(f"New list of capitalized names only: {only_cap_list}")
+    print(f"Score dict: {names_with_scores}")
+    new_dict = {}
+    average = sum(names_with_scores.values()) / len(names_with_scores)
+    for key, value in names_with_scores.items():
+        if value >= average:
+            new_dict[key] = value
 
-names_with_scores: dict = {}
-for key in cap_list:
-    names_with_scores[key] = random.randint(0, 1000)
-
-print(f"Score dict: {names_with_scores}")
-new_dict = {}
-total = sum(names_with_scores.values()) / len(names_with_scores)
-for key, value in names_with_scores.items():
-    if value >= total:
-        new_dict[key] = value
-
-print(f"High scores: {new_dict}")
+    print(
+        f"Score average is {round(average, 2)}\n"
+        f"High scores: {new_dict}"
+    )
