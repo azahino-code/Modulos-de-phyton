@@ -23,9 +23,9 @@ if __name__ == "__main__":
             f"Virtual Environment: {os.path.basename(sys.prefix)}"
             f"Environment Path: {sys.prefix}\n"
             "\nSUCCES: You are working in an isolated enviroment!\n"
-            "Safe to install reagents without affecting\nthe global system.\n\n"
+            "Safe to install reagents without affecting"
+            "\nthe global system.\n\n"
             "Reagent installation path:\n"
             f"{site.getsitepackages()}"
         )
         print("Virtual Enviroment: Detected\n")
-    

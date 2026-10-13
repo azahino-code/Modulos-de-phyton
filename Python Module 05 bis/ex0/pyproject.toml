@@ -1,0 +1,7 @@
+[project]
+name = "ex0"
+version = "0.1.0"
+dependencies = [
+    "pandas",
+    "numpy"
+]
