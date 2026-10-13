@@ -1,14 +1,4 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#    data_processor.py                                  :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/08/28 22:45:50 by azahino-          #+#    #+#             #
-#    Updated: 2026/08/28 22:45:50 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
+#!/usr/bin/env python3
 
 from abc import ABC, abstractmethod
 
@@ -156,3 +146,9 @@ class LogProcessor(DataProcessor):
                 raise ValueError("Invalid data.")
         else:
             raise ValueError("Invalid data.")
+
+
+if __name__ == "__main__":
+    print(
+        "=== Code Nexus - Data Processor ==="
+    )

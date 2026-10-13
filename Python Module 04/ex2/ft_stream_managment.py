@@ -1,23 +1,13 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#    ft_stream_managment.py                             :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/08/21 16:14:16 by azahino-          #+#    #+#             #
-#    Updated: 2026/08/21 16:14:17 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
+#!usr/bin/env python3
 
 import sys
 
 from typing import IO
 
 
-def acces_to_file(f_name: str, mode: str = "r") -> IO:
+def acces_to_file(f_name: str, mode: str = "r") -> IO[str]:
     try:
-        file: IO = open(f_name, mode)
+        file: IO[str] = open(f_name, mode)
         return file
     except FileNotFoundError as error:
         sys.stderr.write(f"[STDERR] Error opening file {f_name}: {error}\n")
@@ -77,28 +67,32 @@ def copy_in_new(mod_text: str) -> None:
                 copy_in_new(mod_text)
         except FileNotFoundError as error:
             message = "[STDERR] Error opening file"
-            sys.stderr.write(message + f"{f_name}: {error}\n")
+            sys.stderr.write(message + f"'{f_name}': {error}\n")
             print("Data not saved.")
         except PermissionError as error:
             message = "[STDERR] Error opening file"
-            sys.stderr.write(message + f"{f_name}: {error}\n")
+            sys.stderr.write(message + f"'{f_name}': {error}\n")
             print("Data not saved.")
 
 
-print("=== Cyber Archives Recovery ===")
-file = acces_to_file(sys.argv[1])
-text = file.read()
-file.close()
-to_print(text, sys.argv[1])
+if __name__ == "__main__":
+    print("=== Cyber Archives Recovery & Preservation ===")
+    if len(sys.argv) < 2:
+        print("Usage: ft_stream_management.py <file>")
+    else:
+        file = acces_to_file(sys.argv[1])
+        text = file.read()
+        file.close()
+        to_print(text, sys.argv[1])
 
-print("Transform Data:\n---")
+        print("\nTransform Data:\n---")
 
-mod_text = text_to_write("#", text)
-file = acces_to_file(sys.argv[1], "w")
-file.write(mod_text)
-file.close()
-file = acces_to_file(sys.argv[1])
-to_print(file.read(), sys.argv[1])
-file.close()
+        mod_text = text_to_write("#", text)
+        file = acces_to_file(sys.argv[1], "w")
+        file.write(mod_text)
+        file.close()
+        file = acces_to_file(sys.argv[1])
+        to_print(file.read(), sys.argv[1])
+        file.close()
 
-copy_in_new(mod_text)
+        copy_in_new(mod_text)

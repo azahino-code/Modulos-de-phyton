@@ -1,16 +1,8 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#    ft_vault_security.py                               :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/08/22 12:20:50 by azahino-          #+#    #+#             #
-#    Updated: 2026/08/22 12:20:51 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
+#!/usr/bin/env python3
 
-def secure_archive(m_filename: str, mode: str, cont: str) -> tuple[bool, str]:
+def secure_archive(
+    m_filename: str, mode: str, cont: str = ""
+) -> tuple[bool, str]:
     try:
         if mode == "read":
             with open(m_filename, "r") as file:
@@ -26,3 +18,17 @@ def secure_archive(m_filename: str, mode: str, cont: str) -> tuple[bool, str]:
         return False, str(error)
     except PermissionError as error:
         return False, str(error)
+
+
+if __name__ == "__main__":
+    print(
+        "=== Cyber Archives Security ===\n\n"
+        "Using 'secure_archive' to read from a nonexistent file:\n"
+        f"{secure_archive("/not/existing/file", "read", "")}"
+        "\n\nUsing 'secure_archive' to read from an inaccessible file:\n"
+        f"{secure_archive("/etc/master.passwd", "read")}"
+        "\n\nUsing 'secure_archive' to read from a regular file:\n"
+        f"{secure_archive("ancient.txt", "read")}"
+        "\n\nUsing 'secure_archive' to write previous content to a new file:\n"
+        f"{secure_archive("new.txt", "write", "HEllo World")}"
+    )
