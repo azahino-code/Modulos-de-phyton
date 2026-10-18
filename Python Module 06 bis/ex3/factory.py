@@ -26,7 +26,7 @@ class FireFactory(CreatureFactory):
         return C.Pyrodon()
 
 
-class TransformatioFactory(CreatureFactory):
+class TransformationFactory(CreatureFactory):
     def __init__(self):
         super().__init__()
 

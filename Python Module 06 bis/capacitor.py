@@ -1,35 +1,23 @@
-# ************************************************************************** #
-#                                                                            #
-#                                                         :::      ::::::::  #
-#    capacitor.py                                          :+:      :+:    :+:  #
-#                                                     +:+ +:+         +:+    #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+       #
-#                                                 +#+#+#+#+#+   +#+          #
-#    Created: 2026/09/24 20:29:28 by azahino-          #+#    #+#            #
-#    Updated: 2026/09/24 20:29:29 by azahino-         ###   ########.fr      #
-#                                                                            #
-# ************************************************************************** #
-
-from ex1 import factorys as f
+#!/usr/bin/env python3
+from ex3 import TransformationFactory as t
 
 
-def creation(fac: f.CreatureFactory) -> f.C.Creature:
-    base = fac.create_base()
-    evolved = fac.create_evolved()
+base = t.create_base(t)
+evolved = t.create_evolved(t)
+print(
+    "Testing Creature with transform capability\n",
+    " base\n",
+    f"{base.describe()}\n",
+    f"{base.attack()}\n",
+    f"{base.transform()}\n",
+    f"{base.attack()}\n",
+    f"{base.revert()}\n",
+    " evolved:\n"
+    f"{evolved.describe()}\n",
+    f"{evolved.attack()}\n",
+    f"{evolved.transform()}\n",
+    f"{evolved.attack()}\n",
+    f"{evolved.revert()}",
+    sep = ""
+)
 
-    print(
-        f"{base.describe()}\n"
-        f"{base.attack()}\"
-        f"{base.heal()}"
-    )
-    print(
-        f"{evolved.describe()}\n"
-        f"{evolved.attack()}" 
-    )
-
-
-print("Testing Creature with healing capability")
-creation(f.HealingCreatureFactory())
-
-print("\nTesting Creature with transform capability")
-creation(f.TransformCreatureFactory())

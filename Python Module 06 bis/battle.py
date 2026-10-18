@@ -1,19 +1,13 @@
-# ************************************************************************** #
-#                                                                            #
-#                                                         :::      ::::::::  #
-#    battle.py                                          :+:      :+:    :+:  #
-#                                                     +:+ +:+         +:+    #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+       #
-#                                                 +#+#+#+#+#+   +#+          #
-#    Created: 2026/09/24 20:29:28 by azahino-          #+#    #+#            #
-#    Updated: 2026/09/24 20:29:29 by azahino-         ###   ########.fr      #
-#                                                                            #
-# ************************************************************************** #
+#!/usr/bin/env python3
 
-from ex3 import factory as f
+from ex3 import (
+    CreatureFactory,
+    FireFactory,
+    TransformationFactory
+)
 
 
-def creation(fac: f.CreatureFactory) -> f.C.Creature:
+def creation(fac: CreatureFactory) -> None:
     base = fac.create_base()
     evolved = fac.create_evolved()
 
@@ -27,24 +21,29 @@ def creation(fac: f.CreatureFactory) -> f.C.Creature:
     )
 
 
-def battle(monster_1: f.FlameFactory, monster_2: f.WaterFactory) -> None:
+def battle(
+    monster_1: CreatureFactory,
+    monster_2: CreatureFactory
+) -> None:
     base_1 = monster_1.create_base()
     base_2 = monster_2.create_base()
 
     print(
         f"{base_1.describe()}\n"
         " vs.\n"
-        f"{base_2.describe()}"
-        " fight!"
+        f"{base_2.describe()}\n"
+        " fight!\n"
         f"{base_1.attack()}\n"
         f"{base_2.attack()}"
     )
 
-print("Testing factory")
-creation(f.FlameFactory())
 
-print("\nTesting factory")
-creation(f.WaterFactory())
+if __name__ == "__main__":
+    print("Testing factory")
+    creation(FireFactory())
 
-print("\nTesting battle")
-battle(f.FlameFactory(), f.WaterFactory())
+    print("\nTesting factory")
+    creation(TransformationFactory())
+
+    print("\nTesting battle")
+    battle(FireFactory(), TransformationFactory())

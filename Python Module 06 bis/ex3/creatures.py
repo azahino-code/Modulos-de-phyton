@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from .habilities import TransformCapability
+
 
 class Creature(ABC):
     def __init__(self) -> None:
@@ -12,18 +12,7 @@ class Creature(ABC):
     def describe(self) -> None:
         return f"{self.name} is {self.type} type Creature"
 
-    @abstractmethod
-    def transform(self) -> str:
-        ...
-
-    @abstractmethod
-    def revert(self) -> str:
-        ...
-
-    @abstractmethod
-    def heal(self) -> str:
-        ...
-
+from .habilities import TransformCapability
 
 # Primera parte (Clases de Fuego)
 class Flameling(Creature):
@@ -82,9 +71,9 @@ class Morphagon(Creature, TransformCapability):
 
     def transform(self) -> str:
         self.shifted = True
-        return f"{self.name} shifts into a dragonic battle form!"
+        return f"{self.name} morphs into a dragonic battle form!"
 
     def revert(self) -> str:
         self.shifted = False
-        return f"{self.name} stablizes its form."
+        return f"{self.name} stabilizes its form."
 

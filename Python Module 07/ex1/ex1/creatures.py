@@ -93,8 +93,6 @@ class Morphagon(Creature, TransformCapability):
         super().__init__()
         self.name = "Morphagon"
         self.type = "Normal/Dragon"
-#       self.hab = TransformCapability.transform()
-#       self.hab2 = TransformCapability.revert()
         self.shifted = False
 
     def attack(self) -> str:
