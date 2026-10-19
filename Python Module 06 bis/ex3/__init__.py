@@ -4,13 +4,15 @@ from .factory import (
     TransformationFactory
 )
 from .creatures import Creature
+from .habilities import TransformCapability
 
 
 __all__ = [
     "CreatureFactory",
     "FireFactory",
     "TransformationFactory",
-    "Creature"
+    "Creature",
+    "TransformCapability"
 ]
 '''
 Estructura: 
