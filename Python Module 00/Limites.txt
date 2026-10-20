@@ -1,0 +1,25 @@
+COSAS A TENER EN CUENTA
+
+1.- Para cada ejercicio, solo deberemos de escribir una unica función (no el main programa).
+    Cada archivo solo contendrá la funcion solicitada.
+2.- NO:
+    - Escribir __name__ == "__name__": Block
+    - No llamar a la función directamente desde mi archivo
+    - No escribir codigo fuera de mis funciones
+
+3.- Para ayudarme el subject me da un main.py
+    - Para usarlo lo incluyo en mi carpeta y lo ejecuto con: `run python3 main.py`
+
+4.- Usar python 3.10+.
+5.- Respetar los estandares de flake8 linter
+6.- Cada función debe estar en su propio archivo.
+7.- Cada archivo solo debera contener su propia función
+8.- No debemos manejar validacion de inputs o casos de error excepto solicitud explicita.
+9.- Para numeros negativos o inputs invalidos, el comportamiento será indefinido. (No hace falta manejarlos)
+10.- 
+
+
+COSAS QUE MIRAR:
+    - El cabecero no enseña mi correo de urduliz completo, revisar el funcionamiento de este.
+    - Aprender que quieren decir con tener el main de prueba
+    
