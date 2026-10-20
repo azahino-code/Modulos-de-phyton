@@ -7,7 +7,7 @@ class Plant:
             self._grow_calls: int = 0
             self._age_calls: int = 0
             self._show_calls: int = 0
-        
+
         def show_stats(self) -> None:
             print(
                 f"Stats: {str(self._grow_calls)} grow, "

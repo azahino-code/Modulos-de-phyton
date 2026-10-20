@@ -11,7 +11,7 @@ class Plant:
 
     def grow(self, growth: float) -> None:
         if growth + self._height < 0:
-            print(f"{self.name}: Error, growth can't be negative")
+            print(f"{self._name}: Error, growth can't be negative")
             print("Growth rejected")
         else:
             self._height += growth
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     print(
         f"Height updated: {plant1.get_height()}cm\n"
         f"Age updated: {plant1.get_age()} days\n"
-	)
+    )
     plant1.set_height(-5)
     plant1.set_age(-30)
     print(f"\nCurrent state:  {plant1.show()}")

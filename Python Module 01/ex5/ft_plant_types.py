@@ -41,7 +41,10 @@ class Plant:
         return self._ages
 
     def show(self) -> str:
-        return f"{self._name}: {round(self._height, 1)}cm, {self._ages} days old"
+        return (
+            f"{self._name}: {round(self._height, 1)}cm,"
+            f"{self._ages} days old"
+        )
 
 
 class Tree(Plant):
@@ -76,7 +79,7 @@ class Flower(Plant):
     def bloom(self) -> None:
         print(f"[asking the {self._name} to bloom]")
         self._is_blooming = True
-	
+
     def show(self) -> str:
         text = super().show()
         text = text + '\n' + f"Color: {self._color}.\n"
@@ -99,7 +102,7 @@ class Vegetable(Plant):
         self._harvest_season = harvest_season
         self._nutritional_value = nutritional_value
 
-    def grow(self, growth) -> None:
+    def grow(self, growth: float) -> None:
         super().grow(growth)
         self._nutritional_value += 0.5
 

@@ -24,13 +24,13 @@ class Plant:
 
 
 if __name__ == "__main__":
-	plant = Plant("rose", 0.32, 0)
-	print("=== Garden Plant Growth ===")
-	plant.show()
-	i = 1
-	for i in range(7):
-		plant.grow(3.5)
-		plant.age()
-		print(f"=== Day {i} ===")
-		plant.show()
-	print(f"Growth this week: {round(plant.growth, 1)}cm")
+    plant = Plant("rose", 0.32, 0)
+    print("=== Garden Plant Growth ===")
+    plant.show()
+    i = 1
+    for i in range(7):
+        plant.grow(3.5)
+        plant.age()
+        print(f"=== Day {i} ===")
+        plant.show()
+    print(f"Growth this week: {round(plant.growth, 1)}cm")
