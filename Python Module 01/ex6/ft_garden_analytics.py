@@ -2,41 +2,54 @@
 
 class Plant:
 
-    class Stadistic:
+    class Stadistics:
         def __init__(self) -> None:
             self._grow_calls: int = 0
             self._age_calls: int = 0
             self._show_calls: int = 0
+        
+        def show_stats(self) -> None:
+            print(
+                f"Stats: {str(self._grow_calls)} grow, "
+                f"{str(self._age_calls)} age, "
+                f"{str(self._show_calls)} show"
+            )
 
     def __init__(self, name: str, height: float, ages: int) -> None:
-        self.name: str = name
-        self.height: float = height
-        self.ages: int = ages
-        self._stats: Plant.Stadistic = Plant.Stadistic()
+        self._name: str = name
+        self._height: float = height
+        self._growth: float = 0.0
+        self._ages: int = ages
+        self._stats: Plant.Stadistics = Plant.Stadistics()
 
     def grow(self, growth: float) -> None:
-        self.height += growth
+        if growth + self._height < 0:
+            print(f"{self._name}: Error, growth can't be negative")
+            print("Growth rejected")
+        else:
+            self._height += growth
+            self._growth += growth
         self._stats._grow_calls += 1
 
     def age(self) -> None:
-        self.ages += 1
+        self._ages += 1
         self._stats._age_calls += 1
 
     def set_height(self, new_height: float) -> None:
         if new_height < 0:
-            print(f"{self.name}: Error, height can't be negative")
+            print(f"{self._name}: Error, height can't be negative")
             print("Height update rejected")
         else:
-            self.height = new_height
-            print(f"Height updated: {self.height}cm")
+            self._height = new_height
+            print(f"Height updated: {round(self._height, 1)}cm")
 
     def set_age(self, new_age: int) -> None:
         if new_age < 0:
-            print(f"{self.name}: Error, age can't be negative")
+            print(f"{self._name}: Error, age can't be negative")
             print("Age update rejected")
         else:
-            self.ages = new_age
-            print(f"Age updated: {self.ages} days")
+            self._ages = new_age
+            print(f"Age updated: {self._ages} days")
 
     @staticmethod
     def static_method(time: int) -> None:
@@ -46,18 +59,21 @@ class Plant:
             print(f"{time} is more than a year? -> TRUE")
 
     @classmethod
-    def anonymous(cls) -> Plant:
-        return cls("Anonymous", 0, 0)
+    def anonymous(cls) -> "Plant":
+        return cls("Unknown plant", 0.0, 0)
 
     def get_height(self) -> None:
-        print(f"{self.name}: actual height: {self.height}cm")
+        print(f"{self._name}: actual height: {round(self._height, 1)}cm")
 
     def get_age(self) -> None:
-        print(f"{self.ages}: actual age: {self.ages} days old")
+        print(f"{self._name}: actual age: {self._ages} days old")
 
     def show(self) -> str:
         self._stats._show_calls += 1
-        return f"{self.name}: {round(self.height, 1)}cm, {self.ages} days old"
+        return (
+            f"{self._name}: {round(self._height, 1)}cm, "
+            f"{self._ages} days old"
+            )
 
 
 class Tree(Plant):
@@ -66,20 +82,22 @@ class Tree(Plant):
         ages: int, trunk_diameter: float
     ) -> None:
         super().__init__(name, height, ages)
-        self.trunk_diameter: float = trunk_diameter
+        self._trunk_diameter: float = trunk_diameter
         self._produced_shades: int = 0
 
     def produce_shade(self) -> None:
         self._produced_shades += 1
-        print(f"[Asking the {self.name} to produce shade]")
-        str1 = f"Tree {self.name} now produces a shade of"
-        str2 = f" {self.height}cm long and {self.trunk_diameter}cm wide"
-        print(str1 + str2)
+        print(f"[asking the {self._name} to produce shade]")
+        print(
+            f"Tree {self._name} now produces a shade of"
+            f" {round(self._height, 1)}cm long and"
+            f" {round(self._trunk_diameter, 1)}cm wide"
+        )
 
     def show(self) -> str:
         text = super().show()
         return (
-            text + '\n' + f"Diameter: {round(self.trunk_diameter, 1)}cm"
+            text + '\n' + f"Diameter: {round(self._trunk_diameter, 1)}cm"
             )
 
 
@@ -89,22 +107,22 @@ class Flower(Plant):
         ages: int, color: str
     ) -> None:
         super().__init__(name, height, ages)
-        self.color: str = color
-        self.is_blooming: bool = False
+        self._color: str = color
+        self._is_blooming: bool = False
 
     def ask_bloom(self) -> None:
-        self.is_blooming = True
+        self._is_blooming = True
 
     def show(self) -> str:
         text = super().show()
-        text = text + '\n' + f"Color: {self.color}\n"
-        if self.is_blooming is True:
+        text = text + '\n' + f"Color: {self._color}\n"
+        if self._is_blooming is True:
             return (
-                text + f"{self.name} is blooming beautifully!"
+                text + f"{self._name} is blooming beautifully!"
                 )
         else:
             return (
-                text + f"{self.name} has not bloomed yet"
+                text + f"{self._name} has not bloomed yet"
                 )
 
 
@@ -114,15 +132,12 @@ class Seed(Flower):
         color: str, n_seeds: int
     ) -> None:
         super().__init__(name, height, ages, color)
-        self.seeds_number: int = n_seeds
-
-    def ask_bloom(self) -> None:
-        super().ask_bloom()
+        self._seeds_number: int = n_seeds
 
     def show(self) -> str:
         text = super().show()
-        if self.is_blooming is True:
-            return text + f"\nSeeds: {self.seeds_number}"
+        if self._is_blooming is True:
+            return text + f"\nSeeds: {self._seeds_number}"
         else:
             return text + "\nSeeds: 0"
 
@@ -133,46 +148,27 @@ class Vegetable(Plant):
         harvest_season: str, nutritional_value: int
     ) -> None:
         super().__init__(name, height, ages)
-        self.harvest_season = harvest_season
-        self.nutritional_value = nutritional_value
-
-    def grow_up(self, days: int) -> None:
-        print(f"[make {self.name} grow and age for {days} days]")
-        i = 0
-        for i in range(days):
-            super().grow(1)
-            super().age()
-            self.nutritional_value += 1
+        self._harvest_season = harvest_season
+        self._nutritional_value = nutritional_value
 
     def show(self) -> str:
         text = super().show()
-        text = text = '\n' + f"Season: {self.harvest_season}\n"
-        return text + f"Nutritional value: {self.nutritional_value}."
+        text = text + '\n' + f"Season: {self._harvest_season}\n"
+        return text + f"Nutritional value: {self._nutritional_value}."
 
 
 def show_stats(plant: Plant) -> None:
+    print(f"[stadistics for {plant._name}]")
+    plant._stats.show_stats()
     if isinstance(plant, Tree):
-        print(
-            f"[stadistics for {plant.name}]\n" +
-            "Stats: " + str(plant._stats._grow_calls) +
-            "grow " + str(plant._stats._age_calls) +
-            "age " + str(plant._stats._show_calls) + " show" +
-            f"\n {plant._produced_shades} shade"
-        )
-    else:
-        print(
-            f"[stadistics for {plant.name}]\n" +
-            "Stats: " + str(plant._stats._grow_calls) +
-            "grow " + str(plant._stats._age_calls) +
-            "age " + str(plant._stats._show_calls) + " show"
-        )
+        print(f"{plant._produced_shades} shades produced.")
 
 
 if __name__ == "__main__":
     print(
         "=== Garden stadistic ===\n=== Check year-old"
         )
-    plant = Flower("Rose", 25, 10, "red")
+    plant = Flower("Rose", 15.0, 10, "red")
     plant.static_method(30)
     plant.static_method(400)
     print(
@@ -180,23 +176,23 @@ if __name__ == "__main__":
         )
     show_stats(plant)
     print("[asking the rose to grow an bloom]")
-    plant.grow(10)
+    plant.grow(8)
     plant.ask_bloom()
     print(plant.show())
     show_stats(plant)
 
-    tree = Tree("Oak", 100, 365, 25)
+    tree = Tree("Oak", 100.0, 365, 5.0)
     print(
         "\n===Tree\n" + tree.show(),
         "[asking the oak to produce shade]"
     )
     tree.produce_shade()
     show_stats(tree)
-    seed = Seed("Sunflower", 80, 45, "yellow", 45)
+    seed = Seed("Sunflower", 80.0, 45, "yellow", 42)
     print("\n=== Seed")
     print(seed.show())
     print("[make sunflower grow, age and bloom]")
-    seed.grow(55)
+    seed.grow(30)
     seed.age()
     seed.ask_bloom()
     print(seed.show())

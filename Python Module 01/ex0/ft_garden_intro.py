@@ -2,10 +2,10 @@
 
 def ft_garden_intro() -> None:
     print("=== Welcome to My Garden ===")
-    self: str = "Rose"
+    name: str = "Rose"
     height: str = "25cm"
     age: str = "30"
-    print("self: ", self, "\nHeight: ", height, f"\nAge: {age} days\n")
+    print("Name: ", name, "\nHeight: ", height, f"\nAge: {age} days\n")
     print("=== End of Program ===")
 
 

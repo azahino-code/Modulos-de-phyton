@@ -4,10 +4,16 @@ class Plant:
     def __init__(self, name: str, starting_cm: float, starting_d: int) -> None:
         self.name: str = name
         self.height: float = starting_cm
+        self.growth: float = 0.0
         self.ages: int = starting_d
 
-    def grow(self) -> None:
-        self.height += 2
+    def grow(self, growth: float) -> None:
+        if growth + self.height < 0:
+            print(f"{self.name}: Error, growth can't be negative")
+            print("Growth rejected")
+        else:
+            self.height += growth
+            self.growth += growth
 
     def age(self) -> None:
         self.ages += 1
