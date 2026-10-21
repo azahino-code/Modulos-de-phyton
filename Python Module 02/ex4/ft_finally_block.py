@@ -2,7 +2,10 @@
 
 class PlantError(Exception):
     def __init__(self, message: str = "") -> None:
-        ...
+        self.error = message
+
+    def __str__(self) -> str:
+        return self.error
 
 
 def water_plant(plant_name: str) -> None:
@@ -13,32 +16,33 @@ def water_plant(plant_name: str) -> None:
 
 
 def test_watering_system() -> None:
+    vault1 = ["Tomato", "Lettuce", "Carrots"]
+    vault2 = ["Tomato", "lettuce", "Carrot"]
     print("=== Garden Watering System ===\n")
     try:
         print("Testing valid plants...")
         print("Opening watering system")
-        water_plant("Tomat")
-        water_plant("Lettuce")
-        water_plant("Carrots")
-
+        for plant in vault1:
+            water_plant(plant)
     except PlantError as error:
         print(
-            f"PlantError detected: {error}\n" +
+            f"PlantError detected: {error}\n"
             "... ending test and returnin to main\n"
         )
+    finally:
+        print("Closing watering system...\n")
 
     try:
         print(
-            "\nTesting invalid plants...\nOpening watering system"
+            "Testing invalid plants..."
+            "\nOpening watering system"
         )
-        water_plant("Tomato")
-        water_plant("lettuce")
-        water_plant("Carrot")
-
+        for plant in vault2:
+            water_plant(plant)
     except PlantError as error:
         print(
-            f"PlantError detected: {error}\n" +
-            "... ending test and returnin to main\n"
+            f"PlantError detected: {error}\n"
+            "... ending test and returning to main"
         )
     finally:
         print("Closing watering system...\n")
