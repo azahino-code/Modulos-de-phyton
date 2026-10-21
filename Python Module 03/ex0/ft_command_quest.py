@@ -3,14 +3,6 @@
 import sys
 
 
-def print_bucle(it: int, limit: int) -> None:
-    if it < limit:
-        print(f"Argument {it}: {sys.argv[it]}")
-        print_bucle(it + 1, limit)
-    else:
-        pass
-
-
 if __name__ == "__main__":
     print("=== Command Quest ===")
     print(f"Program name: {sys.argv[0]}")
@@ -18,5 +10,8 @@ if __name__ == "__main__":
         print("No arguments provided!")
     else:
         print(f"Arguments received: {len(sys.argv) - 1}")
-        print_bucle(1, len(sys.argv))
-    print(f"Total argments {len(sys.argv)}")
+        i = 1
+        for arg in sys.argv[1:]:
+            print(f"Argument {i}: {arg}")
+            i += 1
+    print(f"Total arguments: {len(sys.argv)}")
