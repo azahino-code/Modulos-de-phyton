@@ -6,15 +6,16 @@ import random
 def capitalize_names(names: list[str]) -> list[str]:
     return_list = []
     for txt in names:
-        return_list.append(txt.capitalize())
+        if txt.capitalize() not in return_list:
+            return_list.append(txt.capitalize())
     return return_list
 
 
 def only_caps(names: list[str]) -> list[str]:
     return_list = []
     for txt in names:
-        if txt == txt.capitalize():
-            return_list.append(txt.capitalize())
+        if txt == txt.capitalize() and txt not in return_list:
+            return_list.append(txt)
     return return_list
 
 
@@ -34,7 +35,7 @@ if __name__ == "__main__":
         names_with_scores[key] = random.randint(0, 1000)
 
     print(f"Score dict: {names_with_scores}")
-    new_dict = {}
+    new_dict: dict[str, int] = {}
     average = sum(names_with_scores.values()) / len(names_with_scores)
     for key, value in names_with_scores.items():
         if value >= average:

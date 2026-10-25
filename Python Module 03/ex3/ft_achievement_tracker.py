@@ -19,7 +19,7 @@ def gen_player_achievements(achievement: list[str]) -> set[str]:
 
 if __name__ == "__main__":
     achievement = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-    
+
     a = Player("Anne", gen_player_achievements(achievement))
     b = Player("Rod", gen_player_achievements(achievement))
     c = Player("Bob", gen_player_achievements(achievement))
@@ -30,7 +30,9 @@ if __name__ == "__main__":
         print(f"Player {player.name}: {player.ach}")
         all_ach.update(player.ach)
     print(f"\nAll distinct achievements: {all_ach}")
-    common = players[0].ach.intersection(*(player.ach for player in players[1:]))
+    common = players[0].ach.intersection(
+        *(player.ach for player in players[1:])
+    )
     print(f"Common achieves: {common}\n")
     for player in players:
         others = set(players) - {player}

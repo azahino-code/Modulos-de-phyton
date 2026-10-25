@@ -9,15 +9,14 @@ class Error(Exception):
 
 listerine = sys.argv[1:]
 bag: dict[str, int] = {}
-i: int = 0
 
 for object in listerine:
     try:
         temp = object.split(":")
         if len(temp) != 2:
-            raise Error(f"invalid parameter '{listerine[i]}'")
+            raise Error(f"invalid parameter '{object}'")
         if temp[0] in bag:
-            print(f"Redundant item {temp[0]} - discarding")
+            print(f"Redundant item '{temp[0]}' - discarding")
         else:
             bag[temp[0]] = int(temp[1])
     except Error as error:
@@ -42,10 +41,15 @@ if __name__ == "__main__":
         print(f"Item list: {keys}")
         print(f"Total quantity of the {len(bag.keys())} items: {total}")
         i = 0
-        maxi = 0
-        mini = 2147483647
+        maxi = values[i]
+        mini = values[i]
+        min_q = [keys[i], values[i]]
+        maxi_q = [keys[i], values[i]]
         while i < len(keys):
-            print(f"Item {keys[i]} represents {round((values[i]/total)*100, 1)}%")
+            print(
+                f"Item {keys[i]} represents"
+                f"{round((values[i] / total) * 100, 1)}%"
+            )
             if mini > values[i]:
                 mini = values[i]
                 min_q = [keys[i], values[i]]
@@ -59,4 +63,3 @@ if __name__ == "__main__":
         print(f"Updated inventory: {bag}")
     except Error as error:
         print(f"Error: {error}")
-    

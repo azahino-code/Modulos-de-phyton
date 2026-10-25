@@ -12,6 +12,7 @@ def convert_int(values: list[str]) -> list[int]:
             print(f"Invalid parameter: '{value}'")
     return scores
 
+
 if __name__ == "__main__":
     if len(sys.argv) <= 1:
         print(
