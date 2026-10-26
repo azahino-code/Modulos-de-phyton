@@ -6,23 +6,26 @@ from typing import IO
 
 
 def to_print(text: str) -> None:
-    print(f"Accessing file {sys.argv[1]}\n---")
-    print(f"\n{text}")
-    print(f"---\nFile {sys.argv[1]} closed.")
+    print(f"---\n\n{text}\n---")
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
+    if len(sys.argv) != 2:
         print("Usage: ft_ancient_text.py <file>")
     else:
-        print("=== Cyber Archives Recovery ===")
-        print(f"Accesing file: '{sys.argv[1]}'")
+        filename: str = sys.argv[1]
+        print(
+            "=== Cyber Archives Recovery ===\n"
+            f"Accessing file: '{sys.argv[1]}'"
+        )
+        file: IO[str] | None = None
         try:
-            file: IO[str] = open(sys.argv[1])
+            file = open(filename, "r")
             text = file.read()
             to_print(text)
-            file.close()
-        except FileNotFoundError as error:
-            print(f"Error opening file '{sys.argv[1]}': {error}\n")
-        except PermissionError as error:
-            print(f"Error opening file '{sys.argv[1]}': {error}\n")
+        except OSError as error:
+            print(f"Error opening file '{filename}': {error}\n")
+        finally:
+            if file is not None:
+                file.close()
+                print(f"File '{filename}' closed.")
