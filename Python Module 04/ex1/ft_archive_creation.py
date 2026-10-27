@@ -21,13 +21,10 @@ def to_print(text: str, file_name: str) -> None:
 
 
 def text_to_write(write: str, in_text: str) -> str:
-    final_text: str = ""
-    for character in in_text:
-        if character != "\n":
-            final_text = final_text + character
-        else:
-            final_text = final_text + write + character
-    final_text = final_text + write
+    lines: list[str] = in_text.splitlines()
+    final_text = ""
+    for line in lines:
+        final_text = final_text + line + write + "\n"
     return final_text
 
 
@@ -58,8 +55,6 @@ if __name__ == "__main__":
             if f_name == "":
                 print("Not saving data")
             else:
-                file = acces_to_file(f_name, "x")
-                file.close()
                 print(f"Saving data to {f_name}")
                 file = acces_to_file(f_name, "w")
                 file.write(mod_text)

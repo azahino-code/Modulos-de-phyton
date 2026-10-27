@@ -1,36 +1,19 @@
-#!usr/bin/env python3
+#!/usr/bin/env python3
 
 import sys
-
 from typing import IO
 
 
-def acces_to_file(f_name: str, mode: str = "r") -> IO[str]:
-    try:
-        file: IO[str] = open(f_name, mode)
-        return file
-    except FileNotFoundError as error:
-        sys.stderr.write(f"[STDERR] Error opening file {f_name}: {error}\n")
-        sys.exit()
-    except PermissionError as error:
-        sys.stderr.write(f"[STDERR] Error opening file {f_name}: {error}\n")
-        sys.exit()
-
-
 def to_print(text: str, file_name: str) -> None:
-    print(f"Accessing file {file_name}\n---")
     print(f"\n{text}")
     print(f"---\nFile {file_name} closed.")
 
 
 def text_to_write(write: str, in_text: str) -> str:
-    final_text: str = ""
-    for character in in_text:
-        if character != "\n":
-            final_text = final_text + character
-        else:
-            final_text = final_text + write + character
-    final_text = final_text + write
+    lines: list[str] = in_text.splitlines()
+    final_text = ""
+    for line in lines:
+        final_text = final_text + line + write + "\n"
     return final_text
 
 
@@ -52,47 +35,63 @@ def copy_in_new(mod_text: str) -> None:
     if f_name == "":
         print("Not saving data")
     else:
+        file: IO[str] | None = None
         try:
-            file = open(f_name)
-            txt = file.read()
-            file.close()
-            if txt == "":
-                print(f"Saving data to {f_name}")
-                file = open(f_name, "w")
-                file.write(mod_text)
+            print(f"Saving data to {f_name}")
+            file = open(f_name, "w")
+            file.write(mod_text)
+            print(f"Data saved in file {f_name}")
+        except OSError as error:
+            message = "[STDERR] Error opening file"
+            sys.stderr.write(message + f"'{f_name}': {error}\n")
+            print("Data not saved.")
+        finally:
+            if file is not None:
                 file.close()
-                print(f"Data saved in file {f_name}")
-            else:
-                print(f"{f_name} is filled, try again.\n")
-                copy_in_new(mod_text)
-        except FileNotFoundError as error:
-            message = "[STDERR] Error opening file"
-            sys.stderr.write(message + f"'{f_name}': {error}\n")
-            print("Data not saved.")
-        except PermissionError as error:
-            message = "[STDERR] Error opening file"
-            sys.stderr.write(message + f"'{f_name}': {error}\n")
-            print("Data not saved.")
-
 
 if __name__ == "__main__":
     print("=== Cyber Archives Recovery & Preservation ===")
-    if len(sys.argv) < 2:
+    if len(sys.argv) != 2:
         print("Usage: ft_stream_management.py <file>")
     else:
-        file = acces_to_file(sys.argv[1])
-        text = file.read()
-        file.close()
-        to_print(text, sys.argv[1])
-
+        file: IO[str] | None = None
+        try:
+            file = open(sys.argv[1])
+            text = file.read()
+            print(f"Accessing file {sys.argv[1]}\n---")
+            to_print(text, sys.argv[1])
+        except OSError as error:
+            sys.stderr.write(
+                f"[STDERR] Error opening file {sys.argv[1]}: {error}\n"
+            )
+            sys.exit(1)
+        finally:
+            if file is not None:
+                file.close()
+        
         print("\nTransform Data:\n---")
 
         mod_text = text_to_write("#", text)
-        file = acces_to_file(sys.argv[1], "w")
-        file.write(mod_text)
-        file.close()
-        file = acces_to_file(sys.argv[1])
-        to_print(file.read(), sys.argv[1])
-        file.close()
-
+        try:
+            file = open(sys.argv[1], "w")
+            file.write(mod_text)
+        except OSError as error:
+            sys.stderr.write(
+                f"[STDERR] Error writing to file {sys.argv[1]}: {error}\n"
+            )
+            sys.exit(1)
+        finally:
+            if file is not None:
+                file.close()
+        try:
+            file = open(sys.argv[1])
+            to_print(file.read(), sys.argv[1])
+        except OSError as error:
+            sys.stderr.write(
+                f"[STDERR] Error writing to file {sys.argv[1]}: {error}\n"
+            )
+            sys.exit(1)
+        finally:
+            if file is not None:
+                file.close()
         copy_in_new(mod_text)
