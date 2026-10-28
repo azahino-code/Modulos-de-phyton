@@ -4,11 +4,6 @@ import sys
 from typing import IO
 
 
-def to_print(text: str, file_name: str) -> None:
-    print(f"\n{text}")
-    print(f"---\nFile {file_name} closed.")
-
-
 def text_to_write(write: str, in_text: str) -> str:
     lines: list[str] = in_text.splitlines()
     final_text = ""
@@ -20,13 +15,9 @@ def text_to_write(write: str, in_text: str) -> str:
 def my_input(txt: str) -> str:
     sys.stdout.write(txt)
     line = sys.stdin.readline()
-    final_line = ""
-    i = 0
-    for c in line:
-        if i <= len(line) - 2:
-            final_line = final_line + c
-            i += 1
-    return final_line
+    if line.endswith("\n"):
+        line = line[:-1]
+    return line
 
 
 def copy_in_new(mod_text: str) -> None:
@@ -42,56 +33,66 @@ def copy_in_new(mod_text: str) -> None:
             file.write(mod_text)
             print(f"Data saved in file {f_name}")
         except OSError as error:
-            message = "[STDERR] Error opening file"
-            sys.stderr.write(message + f"'{f_name}': {error}\n")
+            sys.stderr.write(
+                f"[STDERR] Error opening file '{f_name}': {error}\n"
+            )
             print("Data not saved.")
+            sys.exit(1)
         finally:
             if file is not None:
                 file.close()
 
+
 if __name__ == "__main__":
-    print("=== Cyber Archives Recovery & Preservation ===")
     if len(sys.argv) != 2:
         print("Usage: ft_stream_management.py <file>")
+        sys.exit(1)
     else:
+        file_name = sys.argv[1]
+        print("=== Cyber Archives Recovery ===\n")
         file: IO[str] | None = None
         try:
-            file = open(sys.argv[1])
+            file = open(file_name)
             text = file.read()
-            print(f"Accessing file {sys.argv[1]}\n---")
-            to_print(text, sys.argv[1])
+            print(f"Accessing file {file_name}\n---")
+            print(text)
+
         except OSError as error:
             sys.stderr.write(
-                f"[STDERR] Error opening file {sys.argv[1]}: {error}\n"
+                f"[STDERR] Error opening file {file_name}: {error}\n"
             )
             sys.exit(1)
         finally:
             if file is not None:
                 file.close()
-        
+                print(f"---\nFile {file_name} closed.")
+
         print("\nTransform Data:\n---")
 
         mod_text = text_to_write("#", text)
+        file = None
         try:
-            file = open(sys.argv[1], "w")
+            file = open(file_name, "w")
             file.write(mod_text)
         except OSError as error:
             sys.stderr.write(
-                f"[STDERR] Error writing to file {sys.argv[1]}: {error}\n"
+                f"[STDERR] Error writing to file {file_name}: {error}\n"
             )
             sys.exit(1)
         finally:
             if file is not None:
                 file.close()
+        file = None
         try:
-            file = open(sys.argv[1])
-            to_print(file.read(), sys.argv[1])
+            file = open(file_name)
+            print(file.read())
         except OSError as error:
             sys.stderr.write(
-                f"[STDERR] Error writing to file {sys.argv[1]}: {error}\n"
+                f"[STDERR] Error opening file {file_name}: {error}\n"
             )
             sys.exit(1)
         finally:
             if file is not None:
                 file.close()
+                print(f"---\nFile {file_name} closed.")
         copy_in_new(mod_text)
