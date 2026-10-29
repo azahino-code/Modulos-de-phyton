@@ -7,10 +7,10 @@ import site
 if __name__ == "__main__":
     if sys.prefix == sys.base_prefix:
         print("LABORATORY STATUS: You are working in the open\n")
-        print(f"Current Pyhton: {sys.executable}")
-        print("Virtual Enviroment: None detected\n")
+        print(f"Current Python: {sys.executable}")
+        print("Virtual Environment: None detected\n")
         print(
-            "WARNING: You are in the global enviroment"
+            "WARNING: You are in the global environment"
             "\nEvery reagent you install here leaks into the whole system.\n"
             "\nTo seal the laboratory, run:\n"
             "python3 -m venv lab_env\n"
@@ -22,13 +22,13 @@ if __name__ == "__main__":
         print(
             "LABORATORY STATUS: The laboratory is sealed\n\n"
             f"Current Python: {sys.executable}\n"
-            f"Virtual Enviroment: {os.path.basename(sys.prefix)}"
-            f"Enviroment Path: {sys.prefix}\n"
-            "\nSUCCES: You are working in an isolated enviroment!\n"
+            f"Virtual Environment: {os.path.basename(sys.prefix)}\n"
+            f"Environment Path: {sys.prefix}\n"
+            "\nSUCCESS: You are working in an isolated environment!\n"
             "Safe to install reagents without affecting"
             "\nthe global system.\n\n"
-            "Reagent installation path:\n"
+            "Reagent installation path:"
         )
         for path in site.getsitepackages():
             print(path)
-        print("Virtual Enviroment: Detected\n")
+        print("Virtual Environment: Detected\n")

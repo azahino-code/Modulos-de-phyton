@@ -33,6 +33,12 @@ else:
     )
     if mode not in ("production", "development"):
         mode = "Unknown"
+    if mode == "development":
+        log_level == "DEBUG"
+    elif mode == "production":
+        log_level = "INFO"
+    else:
+        log_level = os.getenv("LOG_LEVEL", "INFO")
     print(
         f"Mode: {mode}\n"
         "Database: Conected to local instance\n"
@@ -42,12 +48,14 @@ else:
         "Configuration security check:\n"
         "[OK] No secrets printed by the program"
     )
-    with open(".gitignore") as ignored:
-        if ".env" in ignored.read():
-            print("[OK] .env file properly ignored by git")
-        else:
-            print("[KO] .env is not ignored by git")
-    ignored.close()
+    if os.path.exists(".gitignore"):
+        with open(".gitignore", encoding="utf-8") as ignored:
+            if ".env" in ignored.read():
+                print("[OK] .env file properly ignored by git")
+            else:
+                print("[KO] .env is not ignored by git")
+    else:
+        print("[KO] .gitignore  file not found")
     if mode == "development":
         print("[OK] Development overrides available")
     elif mode == "production":

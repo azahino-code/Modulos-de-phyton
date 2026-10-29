@@ -2,13 +2,13 @@
 name = "ex0"
 version = "0.1.0"
 description = "Project example using Poetry"
-authors = [azahino- <azahino-@student.42urduliz.com>]
+authors = ["azahino- azahino-@student.42urduliz.com"]
 
 [tool.poetry.dependencies]
 python = ">=3.10"
 pandas = "*"
 numpy = "*"
 
-[buillt-system]
+[build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
