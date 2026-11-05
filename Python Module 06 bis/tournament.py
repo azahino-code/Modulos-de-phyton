@@ -13,7 +13,7 @@ from ex4 import (
 
 def battle(fighters: list[tuple[CreatureFactory, BattleStrategy]]) -> None:
     base_1 = fighters[0][0].create_base()
-    base_2 = fighters[0][0].create_base()
+    base_2 = fighters[1][0].create_base()
     print(
         f"{base_1.describe()}",
         " vs.",
@@ -23,7 +23,7 @@ def battle(fighters: list[tuple[CreatureFactory, BattleStrategy]]) -> None:
     )
     for mons in fighters:
         base = mons[0].create_base()
-        mons[1].act()
+        base.act()
 
 
 if __name__ == "__main__":

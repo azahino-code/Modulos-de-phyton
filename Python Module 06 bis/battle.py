@@ -17,16 +17,16 @@ def creation(fac: CreatureFactory) -> None:
     )
     print(
         f"{evolved.describe()}\n"
-        f"{evolved.attack()}" 
+        f"{evolved.attack()}"
     )
 
 
 def battle(
-    monster_1: CreatureFactory,
-    monster_2: CreatureFactory
+    monster_f_1: CreatureFactory,
+    monster_f_2: CreatureFactory
 ) -> None:
-    base_1 = monster_1.create_base()
-    base_2 = monster_2.create_base()
+    base_1 = monster_f_1.create_base()
+    base_2 = monster_f_2.create_base()
 
     print(
         f"{base_1.describe()}\n"

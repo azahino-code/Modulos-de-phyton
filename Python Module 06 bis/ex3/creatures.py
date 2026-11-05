@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-
+from .habilities import TransformCapability
 
 class Creature(ABC):
     def __init__(self) -> None:
@@ -9,71 +9,71 @@ class Creature(ABC):
     def attack(self) -> str:
         ...
 
-    def describe(self) -> None:
-        return f"{self.name} is {self.type} type Creature"
+    def describe(self) -> str:
+        return f"{self._name} is {self._type} type Creature"
 
-from .habilities import TransformCapability
+
 
 # Primera parte (Clases de Fuego)
 class Flameling(Creature):
     def __init__(self) -> None:
         super().__init__()
-        self.name = "Flameling"
-        self.type = "Fire"
+        self._name = "Flameling"
+        self._type = "Fire"
 
     def attack(self) -> str:
-        return f"{self.name} uses Ember!"
+        return f"{self._name} uses Ember!"
 
 
 class Pyrodon(Creature):
     def __init__(self) -> None:
         super().__init__()
-        self.name = "Pyrodon"
-        self.type = "Fire/Fliying"
+        self._name = "Pyrodon"
+        self._type = "Fire/Flying"
 
     def attack(self) -> str:
-        return f"{self.name} uses Flamethrower!"
+        return f"{self._name} uses Flamethrower!"
 
 # 2 Parte. Clases con habilidades
 class Shiftling(Creature, TransformCapability):
     def __init__(self) -> None:
         super().__init__()
-        self.name = "Shiftling"
-        self.type = "Normal"
-        self.shifted = False
+        self._name = "Shiftling"
+        self._type = "Normal"
+        self._shifted: bool = False
 
     def attack(self) -> str:
-        if self.shifted == False:
-            return f"{self.name} attacks normally."
+        if not self._shifted:
+            return f"{self._name} attacks normally."
         else:
-            return f"{self.name} performs a boosted strike!"
+            return f"{self._name} performs a boosted strike!"
 
     def transform(self) -> str:
-        self.shifted = True
-        return f"{self.name} shifts into a sharper form!"
+        self._shifted = True
+        return f"{self._name} shifts into a sharper form!"
 
     def revert(self) -> str:
-        self.shifted = False
-        return f"{self.name} returns to normal."
+        self._shifted = False
+        return f"{self._name} returns to normal."
 
 class Morphagon(Creature, TransformCapability):
     def __init__(self) -> None:
         super().__init__()
-        self.name = "Morphagon"
-        self.type = "Normal/Dragon"
-        self.shifted = False
+        self._name = "Morphagon"
+        self._type = "Normal/Dragon"
+        self._shifted = False
 
     def attack(self) -> str:
-        if self.shifted == False:
-            return f"{self.name} attacks normally"
+        if not self._shifted:
+            return f"{self._name} attacks normally."
         else:
-            return f"{self.name} unleashes a devastating morph strike!"
+            return f"{self._name} unleashes a devastating morph strike!"
 
     def transform(self) -> str:
-        self.shifted = True
-        return f"{self.name} morphs into a dragonic battle form!"
+        self._shifted = True
+        return f"{self._name} morphs into a dragonic battle form!"
 
     def revert(self) -> str:
-        self.shifted = False
-        return f"{self.name} stabilizes its form."
+        self._shifted = False
+        return f"{self._name} stabilizes its form."
 

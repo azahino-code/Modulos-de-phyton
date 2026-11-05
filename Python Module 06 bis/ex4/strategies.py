@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 
 from abc import ABC, abstractmethod
-from ex3 import Creature, TransformCapability, TransformationFactory
+from ex3.creatures import Creature, TransformCapability
+
+
+class InvalidStrategyError(Exception):
+    def __init__(self, *args: object) -> None:
+        super().__init__(*args)
 
 class BattleStrategy(ABC):
-    def __init__(self, creature) -> None:
-        self.creature = creature
+    def __init__(self, creature: Creature) -> None:
+        self.c_reature = creature
 
     @abstractmethod
     def is_valid(self) -> bool:
@@ -21,45 +26,33 @@ class NormalStrategy(BattleStrategy):
         super().__init__(creature)
 
     def is_valid(self) -> bool:
-        if isinstance(self.creature, Creature):
-            return True
-        else:
-            return False
+        return isinstance(self.creature, Creature)
 
     def act(self) -> None:
-        try:
-            if self.is_valid() == True:
-                print(f"{self.creature.attack()}")
-            else:
-                raise Exception(
-                    f"Invalid Creature '{self.creature.name}'"
-                    "for this normal strategy"
-                )
-        except Exception as error:
-            print(f"Battle error, aborting tournament: {error}")
+        if self.is_valid():
+            print(f"{self.creature.attack()}")
+        else:
+            raise InvalidStrategyError(
+                f"Invalid Creature '{self.creature.name}'"
+                "for this normal strategy"
+            )
 
 class AggressiveStrategy(BattleStrategy):
     def __init__(self, creature: Creature):
         super().__init__(creature)
 
     def is_valid(self) -> bool:
-        if isinstance(self.creature, TransformCapability):
-            return True
-        else:
-            return False
+        return isinstance(self._creature, TransformCapability)
 
     def act(self) -> None:
-        try:
-            if self.is_valid() == True:
-                print(
-                    f"{self.creature.transform()}\n"
-                    f"{self.creature.attack()}\n"
-                    f"{self.creature.revert()}"
-                )
-            else:
-                raise Exception(
-                    f"Invalid Creature '{self.creature.name}'"
-                    "for this aggressive strategy"
-                )
-        except Exception as error:
-            print(f"Battle error, aborting tournament: {error}")
+        if self.is_valid():
+            print(
+                f"{self.creature.transform()}\n"
+                f"{self.creature.attack()}\n"
+                f"{self.creature.revert()}"
+            )
+        else:
+            raise InvalidStrategyError(
+                f"Invalid Creature '{self._creature._name}'"
+                "for this aggressive strategy"
+            )

@@ -1,15 +1,14 @@
-from abc import ABC
-from .creatures import Creature
+from abc import ABC, abstractmethod
 
 
 class TransformCapability(ABC):
     def __init__(self):
         pass
 
-    @classmethod
-    def transform(cls) -> str:
+    @abstractmethod
+    def transform(self) -> str:
         pass
 
-    @classmethod
-    def revert(cls) -> str:
+    @abstractmethod
+    def revert(self) -> str:
         pass
