@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from .habilities import TransformCapability
 
+
 class Creature(ABC):
     def __init__(self) -> None:
         ...
@@ -13,8 +14,6 @@ class Creature(ABC):
         return f"{self._name} is {self._type} type Creature"
 
 
-
-# Primera parte (Clases de Fuego)
 class Flameling(Creature):
     def __init__(self) -> None:
         super().__init__()
@@ -34,7 +33,7 @@ class Pyrodon(Creature):
     def attack(self) -> str:
         return f"{self._name} uses Flamethrower!"
 
-# 2 Parte. Clases con habilidades
+
 class Shiftling(Creature, TransformCapability):
     def __init__(self) -> None:
         super().__init__()
@@ -56,6 +55,7 @@ class Shiftling(Creature, TransformCapability):
         self._shifted = False
         return f"{self._name} returns to normal."
 
+
 class Morphagon(Creature, TransformCapability):
     def __init__(self) -> None:
         super().__init__()
@@ -76,4 +76,3 @@ class Morphagon(Creature, TransformCapability):
     def revert(self) -> str:
         self._shifted = False
         return f"{self._name} stabilizes its form."
-

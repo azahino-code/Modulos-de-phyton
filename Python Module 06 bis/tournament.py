@@ -2,14 +2,16 @@
 
 from ex3 import (
     TransformationFactory,
-    FireFactory, 
+    FireFactory,
     CreatureFactory
 )
 from ex4 import (
     BattleStrategy,
     NormalStrategy,
-    AggressiveStrategy
+    AggressiveStrategy,
+    InvalidStrategyError
 )
+
 
 def battle(fighters: list[tuple[CreatureFactory, BattleStrategy]]) -> None:
     base_1 = fighters[0][0].create_base()
@@ -19,17 +21,17 @@ def battle(fighters: list[tuple[CreatureFactory, BattleStrategy]]) -> None:
         " vs.",
         f"{base_2.describe()}",
         " now fight",
-        sep = "\n"
+        sep="\n"
     )
-    for mons in fighters:
-        base = mons[0].create_base()
-        base.act()
+    for mons, strat in fighters:
+        beast = mons.create_base()
+        strat.act(beast)
 
 
 if __name__ == "__main__":
     parts: list[tuple[CreatureFactory, BattleStrategy]] = [
-        (FireFactory(), NormalStrategy(FireFactory().create_base())),
-        (TransformationFactory(), AggressiveStrategy(TransformationFactory().create_base()))
+        (FireFactory(), NormalStrategy()),
+        (TransformationFactory(), AggressiveStrategy())
     ]
     print(
         "Tournament 0 (basic)",
@@ -38,12 +40,12 @@ if __name__ == "__main__":
         "2 opponents involved\n",
 
         "* Battle *",
-        sep = "\n"
+        sep="\n"
     )
     battle(parts)
     parts = [
-        (TransformationFactory(), AggressiveStrategy(TransformationFactory().create_base())),
-        (FireFactory(), AggressiveStrategy(FireFactory().create_base())),
+        (TransformationFactory(), AggressiveStrategy()),
+        (FireFactory(), AggressiveStrategy()),
     ]
     print(
         "\nTournament 1 (error)",
@@ -51,6 +53,9 @@ if __name__ == "__main__":
         "*** Tournament ***",
         "2 opponents involved\n",
         "* Battle *",
-        sep = "\n"
+        sep="\n"
     )
-    battle(parts)
+    try:
+        battle(parts)
+    except InvalidStrategyError as e:
+        print(f"An error occurred: {e}")

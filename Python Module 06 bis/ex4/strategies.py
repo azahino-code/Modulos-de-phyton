@@ -1,58 +1,51 @@
 #!/usr/bin/env python3
 
 from abc import ABC, abstractmethod
-from ex3.creatures import Creature, TransformCapability
+from ex3.creatures import Creature
+from ex3.habilities import TransformCapability
 
 
 class InvalidStrategyError(Exception):
-    def __init__(self, *args: object) -> None:
-        super().__init__(*args)
+    pass
+
 
 class BattleStrategy(ABC):
-    def __init__(self, creature: Creature) -> None:
-        self.c_reature = creature
-
     @abstractmethod
-    def is_valid(self) -> bool:
+    def is_valid(self, creature: Creature) -> bool:
         ...
 
     @abstractmethod
-    def act(self) -> None:
+    def act(self, creature: Creature) -> None:
         ...
 
 
 class NormalStrategy(BattleStrategy):
-    def __init__(self, creature: Creature) -> None:
-        super().__init__(creature)
+    def is_valid(self, creature: Creature) -> bool:
+        return isinstance(creature, Creature)
 
-    def is_valid(self) -> bool:
-        return isinstance(self.creature, Creature)
-
-    def act(self) -> None:
-        if self.is_valid():
-            print(f"{self.creature.attack()}")
+    def act(self, creature: Creature) -> None:
+        if self.is_valid(creature):
+            print(f"{creature.attack()}")
         else:
             raise InvalidStrategyError(
-                f"Invalid Creature '{self.creature.name}'"
+                f"Invalid Creature '{creature._name}'"
                 "for this normal strategy"
             )
 
+
 class AggressiveStrategy(BattleStrategy):
-    def __init__(self, creature: Creature):
-        super().__init__(creature)
+    def is_valid(self, creature: Creature) -> bool:
+        return isinstance(creature, TransformCapability)
 
-    def is_valid(self) -> bool:
-        return isinstance(self._creature, TransformCapability)
-
-    def act(self) -> None:
-        if self.is_valid():
+    def act(self, creature: Creature) -> None:
+        if self.is_valid(creature):
             print(
-                f"{self.creature.transform()}\n"
-                f"{self.creature.attack()}\n"
-                f"{self.creature.revert()}"
+                f"{creature.transform()}\n"
+                f"{creature.attack()}\n"
+                f"{creature.revert()}"
             )
         else:
             raise InvalidStrategyError(
-                f"Invalid Creature '{self._creature._name}'"
+                f"Invalid Creature '{creature._name}' "
                 "for this aggressive strategy"
             )

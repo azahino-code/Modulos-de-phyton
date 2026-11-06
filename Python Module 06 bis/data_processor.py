@@ -39,26 +39,23 @@ class NumericProcessor(DataProcessor):
             return False
 
     def ingest(self, data: int | float | list[int | float]) -> None:
-        try:
-            if isinstance(data, int | float):
-                if self.validate(data):
-                    add = self.rank, str(data)
+        if isinstance(data, int | float):
+            if self.validate(data):
+                add = self.rank, str(data)
+                self.value.append(add)
+                self.rank += 1
+            else:
+                raise ValueError("Invalid data.")
+        elif isinstance(data, list):
+            for item in data:
+                if self.validate(item):
+                    add = self.rank, str(item)
                     self.value.append(add)
                     self.rank += 1
                 else:
-                    raise ValueError("Invalid data.")
-            elif isinstance(data, list):
-                for item in data:
-                    if self.validate(item):
-                        add = self.rank, str(item)
-                        self.value.append(add)
-                        self.rank += 1
-                    else:
-                        raise ValueError("Improper numeric data")
-            else:
-                raise ValueError("Improper numeric data")
-        except ValueError as error:
-            print(f"Get exception: {error}")
+                    raise ValueError("Improper numeric data")
+        else:
+            raise ValueError("Improper numeric data")
 
 
 class TextProcessor(DataProcessor):
@@ -76,26 +73,23 @@ class TextProcessor(DataProcessor):
             return False
 
     def ingest(self, data: str | list[str]) -> None:
-        try:
-            if isinstance(data, str):
-                if self.validate(data):
-                    add = self.rank, str(data)
+        if isinstance(data, str):
+            if self.validate(data):
+                add = self.rank, str(data)
+                self.value.append(add)
+                self.rank += 1
+            else:
+                raise ValueError("Improper text data")
+        elif isinstance(data, list):
+            for item in data:
+                if self.validate(item):
+                    add = self.rank, str(item)
                     self.value.append(add)
                     self.rank += 1
                 else:
                     raise ValueError("Improper text data")
-            elif isinstance(data, list):
-                for item in data:
-                    if self.validate(item):
-                        add = self.rank, str(item)
-                        self.value.append(add)
-                        self.rank += 1
-                    else:
-                        raise ValueError("Improper text data")
-            else:
-                raise ValueError("Improper text data")
-        except ValueError as error:
-            print(f"Get exception: {error}")
+        else:
+            raise ValueError("Improper text data")
 
 
 class LogProcessor(DataProcessor):
@@ -119,42 +113,39 @@ class LogProcessor(DataProcessor):
             return False
 
     def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
-        try:
-            if isinstance(data, dict):
-                if self.validate(data):
+        if isinstance(data, dict):
+            if self.validate(data):
+                text = ""
+                count = 1
+                for key in data:
+                    if count == 1:
+                        text = data[key]
+                        count += 1
+                    else:
+                        text = text + ": " + data[key]
+                add = self.rank, text
+                self.value.append(add)
+                self.rank += 1
+            else:
+                raise ValueError("Invalid data.")
+        elif isinstance(data, list):
+            if self.validate(data):
+                for diccionary in data:
                     text = ""
                     count = 1
-                    for key in data:
+                    for key in diccionary:
                         if count == 1:
-                            text = data[key]
+                            text = diccionary[key]
                             count += 1
                         else:
-                            text = text + ": " + data[key]
+                            text = text + ": " + diccionary[key]
                     add = self.rank, text
                     self.value.append(add)
                     self.rank += 1
-                else:
-                    raise ValueError("Invalid data.")
-            elif isinstance(data, list):
-                if self.validate(data):
-                    for diccionary in data:
-                        text = ""
-                        count = 1
-                        for key in diccionary:
-                            if count == 1:
-                                text = diccionary[key]
-                                count += 1
-                            else:
-                                text = text + ": " + diccionary[key]
-                        add = self.rank, text
-                        self.value.append(add)
-                        self.rank += 1
-                else:
-                    raise ValueError("Invalid data.")
             else:
                 raise ValueError("Invalid data.")
-        except ValueError as error:
-            print(f"Get exception: {error}")
+        else:
+            raise ValueError("Invalid data.")
 
 
 if __name__ == "__main__":
@@ -170,10 +161,17 @@ if __name__ == "__main__":
         f"Trying to validate input 'Hello': {numeric.validate("Hello")}\n"
         f"Test invalid ingestion of string 'foo' without prior validation:"
     )
-    numeric.ingest("foo")
+    invalid_parameter: Any = "foo"
+    try:
+        numeric.ingest(invalid_parameter)
+    except ValueError as e:
+         print(f"An error occurred: {e}")
     num: list[int | float] = [1, 2, 3, 4, 5]
     print(f"Processing data: {num}")
-    numeric.ingest(num)
+    try:
+        numeric.ingest(num)
+    except ValueError as e:
+        print(f"An error occurred: {e}")
     print("Extracting 3 values...")
     for i in range(3):
         to_p = numeric.output()
@@ -185,7 +183,10 @@ if __name__ == "__main__":
         f"Trying to validate input '42': {text.validate(42)}\n"
         f"Processing data: {txt}"
     )
-    text.ingest(txt)
+    try:
+        text.ingest(txt)
+    except ValueError as e:
+        print(f"An error occurred: {e}")
     print("Extracting 1 value...")
     for i in range(1):
         to_p = text.output()
@@ -200,7 +201,10 @@ if __name__ == "__main__":
         f"Trying to validate input 'Hello': {log.validate("Hello")}\n"
         f"Processing data: {logg}"
     )
-    log.ingest(logg)
+    try:
+        log.ingest(logg)
+    except ValueError as e:
+        print(f"An error occurred: {e}")
     print("Extracting 2 values...")
     for i in range(2):
         to_p = log.output()
