@@ -19,4 +19,4 @@ class SpaceStation(BaseModel):
 if __name__ == "__main__":
     generator = SpaceStationGenerator(DataConfig())
     spaceship = SpaceStation(generator)
-    print(SpaceStation)
+    print(spaceship)
