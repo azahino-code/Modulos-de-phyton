@@ -19,9 +19,12 @@ class DataProcessor(ABC):
         pass
 
     def output(self) -> tuple[int, str]:
-        ret = self.value[0]
-        del self.value[0]
-        return ret
+        if len(self.value) == 0:
+            raise IndexError("No valid data.")
+        else:
+            ret = self.value[0]
+            del self.value[0]
+            return ret
 
 
 class NumericProcessor(DataProcessor):
@@ -165,7 +168,7 @@ if __name__ == "__main__":
     try:
         numeric.ingest(invalid_parameter)
     except ValueError as e:
-         print(f"An error occurred: {e}")
+        print(f"An error occurred: {e}")
     num: list[int | float] = [1, 2, 3, 4, 5]
     print(f"Processing data: {num}")
     try:
@@ -207,5 +210,8 @@ if __name__ == "__main__":
         print(f"An error occurred: {e}")
     print("Extracting 2 values...")
     for i in range(2):
-        to_p = log.output()
-        print(f"Log value {to_p[0]}: {to_p[1]}")
+        try:
+            to_p = log.output()
+            print(f"Log value {to_p[0]}: {to_p[1]}")
+        except IndexError as e:
+            print(e)

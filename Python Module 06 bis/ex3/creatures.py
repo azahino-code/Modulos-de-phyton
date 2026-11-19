@@ -4,7 +4,8 @@ from .habilities import TransformCapability
 
 class Creature(ABC):
     def __init__(self) -> None:
-        ...
+        self._name = ""
+        self._type = ""
 
     @abstractmethod
     def attack(self) -> str:

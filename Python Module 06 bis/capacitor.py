@@ -1,11 +1,26 @@
 #!/usr/bin/env python3
+from typing import Protocol
 from ex3 import TransformationFactory as T
+
+
+class TransformableCreature(Protocol):
+    def attack(self) -> str:
+        ...
+
+    def describe(self) -> str:
+        ...
+
+    def transform(self) -> str:
+        ...
+
+    def revert(self) -> str:
+        ...
 
 
 if __name__ == "__main__":
     factory = T()
-    base = factory.create_base()
-    evolved = factory.create_evolved()
+    base: TransformableCreature = factory.create_base()
+    evolved: TransformableCreature = factory.create_evolved()
     print(
         "Testing Creature with transform capability\n",
         " base\n",

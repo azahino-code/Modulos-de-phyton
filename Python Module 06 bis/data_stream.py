@@ -1,15 +1,3 @@
-# *************************************************************************** #
-#                                                                             #
-#                                                         :::      ::::::::   #
-#    data_processor.py                                  :+:      :+:    :+:   #
-#                                                     +:+ +:+         +:+     #
-#    By: azahino- <azahino-@student.42urduliz.com   +#+  +:+       +#+        #
-#                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/08/28 22:45:50 by azahino-          #+#    #+#             #
-#    Updated: 2026/08/28 22:45:50 by azahino-         ###   ########.fr       #
-#                                                                             #
-# *************************************************************************** #
-
 from abc import ABC, abstractmethod
 
 from typing import Any
@@ -30,9 +18,12 @@ class DataProcessor(ABC):
         pass
 
     def output(self) -> tuple[int, str]:
-        ret = self.value[0]
-        del self.value[0]
-        return ret
+        if len(self.value) == 0:
+            raise IndexError("No valid data.")
+        else:
+            ret = self.value[0]
+            del self.value[0]
+            return ret
 
 
 class NumericProcessor(DataProcessor):
@@ -53,26 +44,23 @@ class NumericProcessor(DataProcessor):
             return False
 
     def ingest(self, data: int | float | list[int | float]) -> None:
-        try:
-            if isinstance(data, int | float):
-                if self.validate(data):
-                    add = self.rank, str(data)
+        if isinstance(data, int | float):
+            if self.validate(data):
+                add = self.rank, str(data)
+                self.value.append(add)
+                self.rank += 1
+            else:
+                raise ValueError("Improper numeric data")
+        elif isinstance(data, list):
+            for item in data:
+                if self.validate(item):
+                    add = self.rank, str(item)
                     self.value.append(add)
                     self.rank += 1
                 else:
                     raise ValueError("Improper numeric data")
-            elif isinstance(data, list):
-                for item in data:
-                    if self.validate(item):
-                        add = self.rank, str(item)
-                        self.value.append(add)
-                        self.rank += 1
-                    else:
-                        raise ValueError("Improper numeric data")
-            else:
-                raise ValueError("Improper numeric data")
-        except ValueError as error:
-            print(f"Get exception: {error}")
+        else:
+            raise ValueError("Improper numeric data")
 
 
 class TextProcessor(DataProcessor):
@@ -93,26 +81,23 @@ class TextProcessor(DataProcessor):
             return False
 
     def ingest(self, data: str | list[str]) -> None:
-        try:
-            if isinstance(data, str):
-                if self.validate(data):
-                    add = self.rank, str(data)
+        if isinstance(data, str):
+            if self.validate(data):
+                add = self.rank, str(data)
+                self.value.append(add)
+                self.rank += 1
+            else:
+                raise ValueError("Improper text data")
+        elif isinstance(data, list):
+            for item in data:
+                if self.validate(item):
+                    add = self.rank, str(item)
                     self.value.append(add)
                     self.rank += 1
                 else:
                     raise ValueError("Improper text data")
-            elif isinstance(data, list):
-                for item in data:
-                    if self.validate(item):
-                        add = self.rank, str(item)
-                        self.value.append(add)
-                        self.rank += 1
-                    else:
-                        raise ValueError("Improper text data")
-            else:
-                raise ValueError("Improper text data")
-        except ValueError as error:
-            print(f"Get exception: {error}")
+        else:
+            raise ValueError("Improper text data")
 
 
 class LogProcessor(DataProcessor):
@@ -138,42 +123,39 @@ class LogProcessor(DataProcessor):
             return False
 
     def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
-        try:
-            if isinstance(data, dict):
-                if self.validate(data):
+        if isinstance(data, dict):
+            if self.validate(data):
+                text = ""
+                count = 1
+                for key in data:
+                    if count == 1:
+                        text = data[key]
+                        count += 1
+                    else:
+                        text = text + ": " + data[key]
+                add = self.rank, text
+                self.value.append(add)
+                self.rank += 1
+            else:
+                raise ValueError("Improper log data")
+        elif isinstance(data, list):
+            if self.validate(data):
+                for diccionary in data:
                     text = ""
                     count = 1
-                    for key in data:
+                    for key in diccionary:
                         if count == 1:
-                            text = data[key]
+                            text = diccionary[key]
                             count += 1
                         else:
-                            text = text + ": " + data[key]
+                            text = text + ": " + diccionary[key]
                     add = self.rank, text
                     self.value.append(add)
                     self.rank += 1
-                else:
-                    raise ValueError("Improper log data")
-            elif isinstance(data, list):
-                if self.validate(data):
-                    for diccionary in data:
-                        text = ""
-                        count = 1
-                        for key in diccionary:
-                            if count == 1:
-                                text = diccionary[key]
-                                count += 1
-                            else:
-                                text = text + ": " + diccionary[key]
-                        add = self.rank, text
-                        self.value.append(add)
-                        self.rank += 1
-                else:
-                    raise ValueError("Improper log data")
             else:
                 raise ValueError("Improper log data")
-        except ValueError as error:
-            print(f"Get exception: {error}")
+        else:
+            raise ValueError("Improper log data")
 
 
 class DataStream():
@@ -186,25 +168,35 @@ class DataStream():
 
     def process_stream(self, stream: list[Any]) -> None:
         self.data = stream
+        remaining: list[Any] = []
         for data in stream:
-            remaining: list[Any] = []
             processed = False
             for p in self.processors:
                 if p.validate(data):
-                    p.ingest(data)
-                    processed = True
-                    break
+                    try:
+                        p.ingest(data)
+                        processed = True
+                        break
+                    except ValueError as e:
+                        print(f"An error occurred: {e}")
             if processed is False:
                 remaining.append(data)
             if len(remaining) > 0:
                 text = "DataStream Error - Can't process"
-                print(f"{text} element in stream: {remaining}")
+                print(f"{text} element in stream: ", end="")
+                for i, r in enumerate(remaining):
+                    if len(remaining) - 1 == i:
+                        print(r)
+                    else:
+                        print(f"{r}, ", end="")
                 del (remaining)
 
     def print_processors_stats(self) -> None:
         print("== DataStream stadistics ==")
-        if len(self.processors) == 0 and len(self.data) == 0:
+        if len(self.processors) == 0:
             print("No processor found, no data")
+        elif len(self.data) == 0:
+            print("There is not data to process")
         else:
             for p in self.processors:
                 print(
@@ -259,10 +251,19 @@ if __name__ == "__main__":
         "\nConsume some elements from the data processors: "
         "Numeric 3, Text 2, Log 1"
     )
-    numeric.output()
-    numeric.output()
-    numeric.output()
-    txt.output()
-    txt.output()
-    log.output()
+    for i in range(3):
+        try:
+            numeric.output()
+        except IndexError as e:
+            print(f"{e}")
+    for i in range(2):
+        try:
+            txt.output()
+        except IndexError as e:
+            print(e)
+    for i in range(1):
+        try:
+            log.output()
+        except IndexError as e:
+            print(e)
     data.print_processors_stats()

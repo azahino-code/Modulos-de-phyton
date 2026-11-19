@@ -24,14 +24,13 @@ class CsvManual():
 
 class JsonManual():
     def process_output(self, data: list[tuple[int, str]]) -> None:
-        print("CSV Output:")
-        text: str = ""
-        i: int = 1
+        print("JSON Output:")
+        text = "{"
         for tupla in data:
-            if text == "":
-                text = f'"item_{str(i)}: "{tupla[1]}"'
-            else:
-                text = text + "," + f'"item_{str(i)}: "{tupla[1]}"'
+            if text != "{":
+                text += ", "
+            text += f'"item_{tupla[0]}": "{tupla[1]}"'
+        text += "}"
         print(text)
 
 
@@ -76,26 +75,23 @@ class NumericProcessor(DataProcessor):
             return False
 
     def ingest(self, data: int | float | list[int | float]) -> None:
-        try:
-            if isinstance(data, int | float):
-                if self.validate(data):
-                    add = self.rank, str(data)
+        if isinstance(data, int | float):
+            if self.validate(data):
+                add = self.rank, str(data)
+                self.value.append(add)
+                self.rank += 1
+            else:
+                raise ValueError("Improper numeric data")
+        elif isinstance(data, list):
+            for item in data:
+                if self.validate(item):
+                    add = self.rank, str(item)
                     self.value.append(add)
                     self.rank += 1
                 else:
                     raise ValueError("Improper numeric data")
-            elif isinstance(data, list):
-                for item in data:
-                    if self.validate(item):
-                        add = self.rank, str(item)
-                        self.value.append(add)
-                        self.rank += 1
-                    else:
-                        raise ValueError("Improper numeric data")
-            else:
-                raise ValueError("Improper numeric data")
-        except ValueError as error:
-            print(f"Get exception: {error}")
+        else:
+            raise ValueError("Improper numeric data")
 
 
 class TextProcessor(DataProcessor):
@@ -116,26 +112,23 @@ class TextProcessor(DataProcessor):
             return False
 
     def ingest(self, data: str | list[str]) -> None:
-        try:
-            if isinstance(data, str):
-                if self.validate(data):
-                    add = self.rank, str(data)
+        if isinstance(data, str):
+            if self.validate(data):
+                add = self.rank, str(data)
+                self.value.append(add)
+                self.rank += 1
+            else:
+                raise ValueError("Improper text data")
+        elif isinstance(data, list):
+            for item in data:
+                if self.validate(item):
+                    add = self.rank, str(item)
                     self.value.append(add)
                     self.rank += 1
                 else:
                     raise ValueError("Improper text data")
-            elif isinstance(data, list):
-                for item in data:
-                    if self.validate(item):
-                        add = self.rank, str(item)
-                        self.value.append(add)
-                        self.rank += 1
-                    else:
-                        raise ValueError("Improper text data")
-            else:
-                raise ValueError("Improper text data")
-        except ValueError as error:
-            print(f"Get exception: {error}")
+        else:
+            raise ValueError("Improper text data")
 
 
 class LogProcessor(DataProcessor):
@@ -161,42 +154,39 @@ class LogProcessor(DataProcessor):
             return False
 
     def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
-        try:
-            if isinstance(data, dict):
-                if self.validate(data):
+        if isinstance(data, dict):
+            if self.validate(data):
+                text = ""
+                count = 1
+                for key in data:
+                    if count == 1:
+                        text = data[key]
+                        count += 1
+                    else:
+                        text = text + ": " + data[key]
+                add = self.rank, text
+                self.value.append(add)
+                self.rank += 1
+            else:
+                raise ValueError("Improper log data")
+        elif isinstance(data, list):
+            if self.validate(data):
+                for diccionary in data:
                     text = ""
                     count = 1
-                    for key in data:
+                    for key in diccionary:
                         if count == 1:
-                            text = data[key]
+                            text = diccionary[key]
                             count += 1
                         else:
-                            text = text + ": " + data[key]
+                            text = text + ": " + diccionary[key]
                     add = self.rank, text
                     self.value.append(add)
                     self.rank += 1
-                else:
-                    raise ValueError("Improper log data")
-            elif isinstance(data, list):
-                if self.validate(data):
-                    for diccionary in data:
-                        text = ""
-                        count = 1
-                        for key in diccionary:
-                            if count == 1:
-                                text = diccionary[key]
-                                count += 1
-                            else:
-                                text = text + ": " + diccionary[key]
-                        add = self.rank, text
-                        self.value.append(add)
-                        self.rank += 1
-                else:
-                    raise ValueError("Improper log data")
             else:
                 raise ValueError("Improper log data")
-        except ValueError as error:
-            print(f"Get exception: {error}")
+        else:
+            raise ValueError("Improper log data")
 
 
 class DataStream():
@@ -209,19 +199,27 @@ class DataStream():
 
     def process_stream(self, stream: list[Any]) -> None:
         self.data = stream
+        remaining: list[Any] = []
         for data in stream:
-            remaining: list[Any] = []
             processed = False
             for p in self.processors:
                 if p.validate(data):
-                    p.ingest(data)
-                    processed = True
-                    break
+                    try:
+                        p.ingest(data)
+                        processed = True
+                        break
+                    except ValueError as error:
+                        print(f"Get exception: {error}")
             if processed is False:
                 remaining.append(data)
             if len(remaining) > 0:
                 text = "DataStream Error - Can't process"
-                print(f"{text} element in stream: {remaining}")
+                print(f"{text} element in stream: ", end="")
+                for i, r in enumerate(remaining):
+                    if len(remaining) - 1 == i:
+                        print(r)
+                    else:
+                        print(f"{r}, ", end="")
                 del (remaining)
 
     def print_processors_stats(self) -> None:
@@ -237,12 +235,15 @@ class DataStream():
         for p in self.processors:
             lister: list[tuple[int, str]] = []
             index = nb
+            if nb < 0:
+                raise ValueError("'nb' can't be negative.")
             if len(p.value) > 0:
                 if index > len(p.value):
                     index = len(p.value)
                 for i in range(index):
                     lister.append(p.output())
-            plugin.process_output(lister)
+            if lister:
+                plugin.process_output(lister)
 
 
 if __name__ == "__main__":
@@ -285,7 +286,10 @@ if __name__ == "__main__":
     print()
 
     print("send 3 processed data from each processor to a CSV plugin:")
-    data.output_pipeline(3, csv)
+    try:
+        data.output_pipeline(3, csv)
+    except ValueError as error:
+        print(error)
     print()
     data.print_processors_stats()
 
@@ -311,6 +315,9 @@ if __name__ == "__main__":
     data.process_stream(stream)
     data.print_processors_stats()
     print("\nSend 5 processed data from each processor to a JSON plugin:")
-    data.output_pipeline(5, json)
+    try:
+        data.output_pipeline(5, json)
+    except ValueError as error:
+        print(error)
     print()
     data.print_processors_stats()
