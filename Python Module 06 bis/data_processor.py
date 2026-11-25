@@ -215,6 +215,6 @@ if __name__ == "__main__":
     for i in range(2):
         try:
             to_p = log.output()
-            print(f"Log value {to_p[0]}: {to_p[1]}")
+            print(f"Log entry {to_p[0]}: {to_p[1]}")
         except IndexError as e:
             print(e)

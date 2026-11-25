@@ -25,18 +25,15 @@ class CsvManual():
 class JsonManual():
     def process_output(self, data: list[tuple[int, str]]) -> None:
         print("JSON Output:")
-        text = "{"
-        for tupla in data:
-            if text != "{":
-                text += ", "
-            text += f'"item_{tupla[0]}": "{tupla[1]}"'
-        text += "}"
-        print(text)
+        result = {
+            f"item_{tupla[0]}": tupla[1] for tupla in data
+        }
+        print(result)
 
 
 class DataProcessor(ABC):
     def __init__(self, name: str):
-        self.rank = 1
+        self.rank = 0
         self.name = name
         self.value: list[tuple[int, str]] = []
 
@@ -231,20 +228,16 @@ class DataStream():
             print("No processor found, no data")
         else:
             for p in self.processors:
-                text1 = f"{p.name}: total {p.rank - 1}, remaining"
+                text1 = f"{p.name}: total {p.rank}, remaining"
                 print(f"{text1}  {len(p.value)} on processor")
 
     def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
+        if nb < 0:
+            raise ValueError("'nb' can't be negative.")
         for p in self.processors:
             lister: list[tuple[int, str]] = []
-            index = nb
-            if nb < 0:
-                raise ValueError("'nb' can't be negative.")
-            if len(p.value) > 0:
-                if index > len(p.value):
-                    index = len(p.value)
-                for i in range(index):
-                    lister.append(p.output())
+            for _ in range(min(nb, len(p.value))):
+                lister.append(p.output())
             if lister:
                 plugin.process_output(lister)
 

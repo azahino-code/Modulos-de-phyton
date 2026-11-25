@@ -5,7 +5,7 @@ from typing import Any
 
 class DataProcessor(ABC):
     def __init__(self, name: str):
-        self.rank = 1
+        self.rank = 0
         self.name = name
         self.value: list[tuple[int, str]] = []
 
@@ -200,7 +200,7 @@ class DataStream():
         else:
             for p in self.processors:
                 print(
-                    f"{p.name}: total {p.rank - 1} items processed,"
+                    f"{p.name}: total {p.rank} items processed,"
                     f" remaining {len(p.value)} on processor"
                 )
 
