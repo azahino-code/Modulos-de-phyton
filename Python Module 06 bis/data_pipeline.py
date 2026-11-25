@@ -52,9 +52,12 @@ class DataProcessor(ABC):
         return self.value
 
     def output(self) -> tuple[int, str]:
-        ret = self.value[0]
-        del self.value[0]
-        return ret
+        if len(self.value) <= 0:
+            raise IndexError("No valid data.")
+        else:
+            ret = self.value[0]
+            del self.value[0]
+            return ret
 
 
 class NumericProcessor(DataProcessor):
@@ -75,8 +78,6 @@ class NumericProcessor(DataProcessor):
             return False
 
     def ingest(self, data: int | float | list[int | float]) -> None:
-        if not self.validate(data):
-            raise ValueError("Improper numeric data")
         if isinstance(data, int | float):
             if self.validate(data):
                 add = self.rank, str(data)
@@ -114,8 +115,6 @@ class TextProcessor(DataProcessor):
             return False
 
     def ingest(self, data: str | list[str]) -> None:
-        if not self.validate(data):
-            raise ValueError("Improper text data")
         if isinstance(data, str):
             if self.validate(data):
                 add = self.rank, str(data)
@@ -158,8 +157,6 @@ class LogProcessor(DataProcessor):
             return False
 
     def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
-        if not self.validate(data):
-            raise ValueError("Improper log data")
         if isinstance(data, dict):
             if self.validate(data):
                 text = ""
