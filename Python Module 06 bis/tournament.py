@@ -16,16 +16,22 @@ from ex4 import (
 def battle(fighters: list[tuple[CreatureFactory, BattleStrategy]]) -> None:
     base_1 = fighters[0][0].create_base()
     base_2 = fighters[1][0].create_base()
-    print(
-        f"{base_1.describe()}",
-        " vs.",
-        f"{base_2.describe()}",
-        " now fight",
-        sep="\n"
-    )
-    for mons, strat in fighters:
-        beast = mons.create_base()
-        strat.act(beast)
+    if fighters[0][1].is_valid(base_1) and fighters[1][1].is_valid(base_2):
+        print(
+            f"{base_1.describe()}",
+            " vs.",
+            f"{base_2.describe()}",
+            " now fight",
+            sep="\n"
+            )
+        for mons, strat in fighters:
+            beast = mons.create_base()
+            strat.act(beast)
+    else:
+        raise InvalidStrategyError(
+			f"Invalid strategy for one of the creatures"
+		)
+    
 
 
 if __name__ == "__main__":
