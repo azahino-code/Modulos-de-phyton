@@ -1,4 +1,4 @@
-from pydantic import BaseModel, model_validator, Field
+from pydantic import BaseModel, model_validator, Field, ValidationError
 from datetime import datetime
 from enum import Enum
 from typing import Self
@@ -15,7 +15,7 @@ class AlienContact(BaseModel):
     contact_id: str = Field(min_length=5, max_length=15)
     timestamp: datetime = Field(default_factory=datetime.now)
     location: str = Field(min_length=3, max_length=100)
-    contact_type: Enum = ContactType
+    contact_type: ContactType
     signal_strength: float = Field(ge=0.0, le=10.0)
     duration_minutes: int = Field(ge=1, le=1440)
     witness_count: int = Field(ge=1, le=100)
@@ -24,9 +24,9 @@ class AlienContact(BaseModel):
 
     @model_validator(mode='after')
     def ft_validator(self) -> Self:
-        if not "AC" in self.contact_id[:1]:
+        if not self.contact_id.startswith("AC"):
             raise ValueError(
-                f"ID start with {self.contact_id[:1]} instead of 'AC'"
+                "ID must start with 'AC'"
             )
         if not self.is_verified:
             raise ValueError("Must be verified.")
@@ -40,33 +40,54 @@ class AlienContact(BaseModel):
                 raise ValueError(
                     "Strong signals (> 7.0) should include received messages"
                 )
-        return Self
+        return self
 
 
-def print_station(a: AlienContact) -> None:
+def print_contact(a: AlienContact) -> None:
     print(
-        f"Station id: {a.station_id}",
-        f"Name: {a.name}",
-        f"Crew_sixe: {a.crew_size}",
-        f"Power_level: {a.power_level}",
-        f"Oxigen_level: {a.oxigen_level}",
-        f"Last Maintenance: {a.last_maintenance}",
-        f"Is operative?: {a.is_operative}",
+        "Alien Contact Log Validation",
+        "=====================================",
+        "Valid contact report:"
+        f"ID: {a.contact_id}",
+        f"Type: {a.contact_type}",
+        f"Location: {a.location}",
+        f"Signal: {a.signal_strength}/10",
+        f"Duration: {a.duration_minutes} minutes",
+        f"Witnesses: {a.witness_count}",
+        f"Is verified?: {a.is_verified}",
         sep="\n"
 	)
-    if a.notes is not None:
-        print(a.notes)
+    if a.message_received is not None:
+        print(a.message_received)
+    print("\n=====================================")
 
 if __name__ == "__main__":
-    contact = AlienContact(
-        contact_id = "AC_2024_001",
-        location = "Area 51, Nevada",
-        contact_type = ContactType.VISUAL,
-        signal_strength = 6.7,
-        duration_minutes = 225,
-        witness_count = 52,
-        is_verified = True
-    )
-
-    
-
+    try:
+        contact = AlienContact(
+            contact_id = "AC_2024_001",
+            location = "Area 51, Nevada",
+            contact_type = ContactType.VISUAL,
+            signal_strength = 6.7,
+            duration_minutes = 225,
+            witness_count = 52,
+            is_verified = True
+        )
+        print_contact(contact)
+    except ValidationError as e:
+        for error in e.errors():
+            print(error['msg'])
+    print("Expected validation error:")
+    try:
+        contact = AlienContact(
+            contact_id = "AC_2024_001",
+            location = "Area 51, Nevada",
+            contact_type = ContactType.TELEPATHIC,
+            signal_strength = 6.7,
+            duration_minutes = 225,
+            witness_count = 2,
+            is_verified = True
+        )
+        print_contact(contact)
+    except ValidationError as e:
+        for error in e.errors():
+            print(error["msg"])
