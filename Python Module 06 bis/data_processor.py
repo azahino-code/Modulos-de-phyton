@@ -19,7 +19,7 @@ class DataProcessor(ABC):
         pass
 
     def output(self) -> tuple[int, str]:
-        if len(self.value) == 0:
+        if len(self.value) <= 0:
             raise IndexError("No valid data.")
         else:
             ret = self.value[0]
@@ -42,8 +42,6 @@ class NumericProcessor(DataProcessor):
             return False
 
     def ingest(self, data: int | float | list[int | float]) -> None:
-        if not self.validate(data):
-            raise ValueError("Improper numeric data")
         if isinstance(data, int | float):
             if self.validate(data):
                 add = self.rank, str(data)
@@ -78,8 +76,6 @@ class TextProcessor(DataProcessor):
             return False
 
     def ingest(self, data: str | list[str]) -> None:
-        if not self.validate(data):
-            raise ValueError("Improper text data")
         if isinstance(data, str):
             if self.validate(data):
                 add = self.rank, str(data)
@@ -120,8 +116,6 @@ class LogProcessor(DataProcessor):
             return False
 
     def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
-        if not self.validate(data):
-            raise ValueError("Improper log data")
         if isinstance(data, dict):
             if self.validate(data):
                 text = ""
@@ -178,7 +172,8 @@ if __name__ == "__main__":
     num: list[int | float] = [1, 2, 3, 4, 5]
     print(f"Processing data: {num}")
     try:
-        numeric.ingest(num)
+        if numeric.validate(num):
+            numeric.ingest(num)
     except ValueError as e:
         print(f"An error occurred: {e}")
     print("Extracting 3 values...")
@@ -193,7 +188,8 @@ if __name__ == "__main__":
         f"Processing data: {txt}"
     )
     try:
-        text.ingest(txt)
+        if text.validate(txt):
+            text.ingest(txt)
     except ValueError as e:
         print(f"An error occurred: {e}")
     print("Extracting 1 value...")
@@ -211,13 +207,14 @@ if __name__ == "__main__":
         f"Processing data: {logg}"
     )
     try:
-        log.ingest(logg)
+        if log.validate(logg):
+            log.ingest(logg)
     except ValueError as e:
         print(f"An error occurred: {e}")
     print("Extracting 2 values...")
     for i in range(2):
         try:
             to_p = log.output()
-            print(f"Log value {to_p[0]}: {to_p[1]}")
+            print(f"Log entry {to_p[0]}: {to_p[1]}")
         except IndexError as e:
             print(e)

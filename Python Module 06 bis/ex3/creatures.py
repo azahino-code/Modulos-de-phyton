@@ -3,9 +3,9 @@ from .habilities import TransformCapability
 
 
 class Creature(ABC):
-    def __init__(self) -> None:
-        self._name = ""
-        self._type = ""
+    def __init__(self, name: str, type: str) -> None:
+        self._name = name
+        self._type = type
 
     @abstractmethod
     def attack(self) -> str:
@@ -16,30 +16,24 @@ class Creature(ABC):
 
 
 class Flameling(Creature):
-    def __init__(self) -> None:
-        super().__init__()
-        self._name = "Flameling"
-        self._type = "Fire"
+    def __init__(self, name: str, type: str) -> None:
+        super().__init__(name, type)
 
     def attack(self) -> str:
         return f"{self._name} uses Ember!"
 
 
 class Pyrodon(Creature):
-    def __init__(self) -> None:
-        super().__init__()
-        self._name = "Pyrodon"
-        self._type = "Fire/Flying"
+    def __init__(self, name: str, type: str) -> None:
+        super().__init__(name, type)
 
     def attack(self) -> str:
         return f"{self._name} uses Flamethrower!"
 
 
 class Shiftling(Creature, TransformCapability):
-    def __init__(self) -> None:
-        super().__init__()
-        self._name = "Shiftling"
-        self._type = "Normal"
+    def __init__(self, name: str, type: str) -> None:
+        super().__init__(name, type)
         self._shifted: bool = False
 
     def attack(self) -> str:
@@ -58,10 +52,8 @@ class Shiftling(Creature, TransformCapability):
 
 
 class Morphagon(Creature, TransformCapability):
-    def __init__(self) -> None:
-        super().__init__()
-        self._name = "Morphagon"
-        self._type = "Normal/Dragon"
+    def __init__(self, name: str, type: str) -> None:
+        super().__init__(name, type)
         self._shifted = False
 
     def attack(self) -> str:

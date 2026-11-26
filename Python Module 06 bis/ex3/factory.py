@@ -14,15 +14,15 @@ class CreatureFactory(ABC):
 
 class FireFactory(CreatureFactory):
     def create_base(self) -> C.Flameling:
-        return C.Flameling()
+        return C.Flameling("Flameling", "Fire")
 
     def create_evolved(self) -> C.Pyrodon:
-        return C.Pyrodon()
+        return C.Pyrodon("Pyrodon", "Fire/Flying")
 
 
 class TransformationFactory(CreatureFactory):
     def create_base(self) -> C.Shiftling:
-        return C.Shiftling()
+        return C.Shiftling("Shiftling", "Normal")
 
     def create_evolved(self) -> C.Morphagon:
-        return C.Morphagon()
+        return C.Morphagon("Morphagon", "Normal/Dragon")

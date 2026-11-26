@@ -5,7 +5,7 @@ from typing import Any
 
 class DataProcessor(ABC):
     def __init__(self, name: str):
-        self.rank = 1
+        self.rank = 0
         self.name = name
         self.value: list[tuple[int, str]] = []
 
@@ -18,7 +18,7 @@ class DataProcessor(ABC):
         pass
 
     def output(self) -> tuple[int, str]:
-        if len(self.value) == 0:
+        if len(self.value) <= 0:
             raise IndexError("No valid data.")
         else:
             ret = self.value[0]
@@ -44,8 +44,6 @@ class NumericProcessor(DataProcessor):
             return False
 
     def ingest(self, data: int | float | list[int | float]) -> None:
-        if not self.validate(data):
-            raise ValueError("Improper numeric data")
         if isinstance(data, int | float):
             if self.validate(data):
                 add = self.rank, str(data)
@@ -83,8 +81,6 @@ class TextProcessor(DataProcessor):
             return False
 
     def ingest(self, data: str | list[str]) -> None:
-        if not self.validate(data):
-            raise ValueError("Improper text data")
         if isinstance(data, str):
             if self.validate(data):
                 add = self.rank, str(data)
@@ -127,8 +123,6 @@ class LogProcessor(DataProcessor):
             return False
 
     def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
-        if not self.validate(data):
-            raise ValueError("Improper log data")
         if isinstance(data, dict):
             if self.validate(data):
                 text = ""
@@ -206,7 +200,7 @@ class DataStream():
         else:
             for p in self.processors:
                 print(
-                    f"{p.name}: total {p.rank - 1} items processed,"
+                    f"{p.name}: total {p.rank} items processed,"
                     f" remaining {len(p.value)} on processor"
                 )
 
