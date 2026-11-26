@@ -174,7 +174,6 @@ class DataStream():
 
     def process_stream(self, stream: list[Any]) -> None:
         self.data = stream
-        
         for data in stream:
             processed = False
             remaining: list[Any] = []
@@ -233,7 +232,7 @@ if __name__ == "__main__":
             },
             {
                 'log_level': 'INFO',
-                'log_message': 'User wil isconnected'
+                'log_message': 'User will disconnected'
             }
         ],
         42,
