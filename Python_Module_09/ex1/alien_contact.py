@@ -4,11 +4,11 @@ from enum import Enum
 from typing import Self
 
 
-class ContactType(Enum):
-    RADIO="radio"
-    VISUAL="visual"
-    PHYSICAL="physical"
-    TELEPATHIC="telepathic"
+class ContactType(str, Enum):
+    RADIO = "radio"
+    VISUAL = "visual"
+    PHYSICAL = "physical"
+    TELEPATHIC = "telepathic"
 
 
 class AlienContact(BaseModel):
@@ -36,7 +36,7 @@ class AlienContact(BaseModel):
                     "Telepathic contact requires at least 3 witnesses"
                 )
         if self.signal_strength > 7.0:
-            if self.message_received is None:
+            if not self.message_received:
                 raise ValueError(
                     "Strong signals (> 7.0) should include received messages"
                 )
@@ -47,7 +47,7 @@ def print_contact(a: AlienContact) -> None:
     print(
         "Alien Contact Log Validation",
         "=====================================",
-        "Valid contact report:"
+        "Valid contact report:",
         f"ID: {a.contact_id}",
         f"Type: {a.contact_type}",
         f"Location: {a.location}",
@@ -56,21 +56,22 @@ def print_contact(a: AlienContact) -> None:
         f"Witnesses: {a.witness_count}",
         f"Is verified?: {a.is_verified}",
         sep="\n"
-	)
+    )
     if a.message_received is not None:
         print(a.message_received)
     print("\n=====================================")
 
+
 if __name__ == "__main__":
     try:
         contact = AlienContact(
-            contact_id = "AC_2024_001",
-            location = "Area 51, Nevada",
-            contact_type = ContactType.VISUAL,
-            signal_strength = 6.7,
-            duration_minutes = 225,
-            witness_count = 52,
-            is_verified = True
+            contact_id="AC_2024_001",
+            location="Area 51, Nevada",
+            contact_type=ContactType.VISUAL,
+            signal_strength=8.5,
+            duration_minutes=225,
+            witness_count=52,
+            is_verified=True
         )
         print_contact(contact)
     except ValidationError as e:
@@ -79,13 +80,13 @@ if __name__ == "__main__":
     print("Expected validation error:")
     try:
         contact = AlienContact(
-            contact_id = "AC_2024_001",
-            location = "Area 51, Nevada",
-            contact_type = ContactType.TELEPATHIC,
-            signal_strength = 6.7,
-            duration_minutes = 225,
-            witness_count = 2,
-            is_verified = True
+            contact_id="AC_2024_001",
+            location="Area 51, Nevada",
+            contact_type=ContactType.TELEPATHIC,
+            signal_strength=6.7,
+            duration_minutes=225,
+            witness_count=2,
+            is_verified=True
         )
         print_contact(contact)
     except ValidationError as e:
